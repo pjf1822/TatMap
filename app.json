@@ -3,6 +3,14 @@
     "name": "mapbox-nativo",
     "slug": "mapbox-nativo",
     "version": "1.0.0",
+    "plugins": [
+      [
+        "@rnmapbox/maps",
+        {
+          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoicGpmMTgyMiIsImEiOiJjbHE0ZnA4aDUwNnU4Mmpsb3k1NGFjNnZvIn0.UpVZBt6XqyD7uUYxOi5SeQ"
+        }
+      ]
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,7 +23,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.pjf1822.mapbox-native"
     },
     "android": {
       "adaptiveIcon": {
@@ -25,6 +34,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7e254cff-3ed3-45b2-9cef-7a830477553d"
+      }
+    },
+    "owner": "pjf1822"
   }
 }
