@@ -1,8 +1,15 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import Mapbox, { PointAnnotation } from "@rnmapbox/maps";
+import { Image, StyleSheet, View } from "react-native";
+import Mapbox from "@rnmapbox/maps";
+import axios from "axios";
 
-import { useEffect, useRef, useState } from "react";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { useEffect, useState } from "react";
 import { fetchAddresses } from "./api";
+import MapPoint from "./components/MapPoint";
+import AddressSearchForm from "./components/AddressSearchForm";
 
 Mapbox.setAccessToken(
   "pk.eyJ1IjoicGpmMTgyMiIsImEiOiJjbGZybHJsMXMwMmd3M3BwMmFiZXlvZjczIn0.68xXIxxj_-iONU42ihPWZA"
@@ -10,14 +17,6 @@ Mapbox.setAccessToken(
 
 export default function App() {
   const [listOfAddresses, setListOfAddresses] = useState([]);
-  const [desc, setDesc] = useState("");
-  const [link, setLink] = useState("");
-  const [addressSelected, setAddressSelected] = useState(false);
-  //  map things
-  const mapContainer = useRef(null);
-  const [lng, setLng] = useState(0);
-  const [lat, setLat] = useState(0);
-  const [zoom, setZoom] = useState(3);
 
   const getAllAddresses = async () => {
     try {
@@ -38,8 +37,31 @@ export default function App() {
     getAllAddresses();
   }, []);
 
+  useEffect(() => {
+    const forwardGeocoding = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+            "67 plymouth ave braintree"
+          )}.json?access_token=pk.eyJ1IjoicGpmMTgyMiIsImEiOiJjbGZybHJsMXMwMmd3M3BwMmFiZXlvZjczIn0.68xXIxxj_-iONU42ihPWZA`
+        );
+
+        const coordinates =
+          response.data.features &&
+          response.data.features.length > 0 &&
+          response.data.features[0].geometry.coordinates;
+      } catch (error) {
+        console.error("Error during forward geocoding:", error);
+      }
+    };
+
+    forwardGeocoding();
+  }, []);
+
   return (
     <View style={styles.page}>
+      <Image source={require("./assets/TatMap.png")} style={styles.logo} />
+      <AddressSearchForm />
       <View style={styles.container}>
         <Mapbox.MapView
           projection="globe"
@@ -49,20 +71,7 @@ export default function App() {
           scaleBarEnabled="false"
         >
           {listOfAddresses.map((address) => (
-            <PointAnnotation
-              ref={(ref) => (this.markerRef = ref)}
-              key={address._id}
-              id={address._id}
-              coordinate={[address.coordinates[0], address.coordinates[1]]}
-              title={"hey"}
-              snippet={"hey"}
-            >
-              <Image
-                source={require("./assets/icons8-dick-64.png")}
-                style={{ width: 30, height: 30 }}
-                onLoad={() => this.markerRef.refresh()}
-              />
-            </PointAnnotation>
+            <MapPoint address={address} key={address._id} />
           ))}
         </Mapbox.MapView>
       </View>
@@ -75,6 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    position: "relative",
   },
   container: {
     height: "100%",
@@ -82,5 +92,13 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+  },
+  logo: {
+    height: hp("13%"),
+    width: wp("13%"),
+    position: "absolute",
+    top: hp("10%"),
+    left: wp("10%"),
+    zIndex: 99,
   },
 });
