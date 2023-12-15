@@ -1,12 +1,11 @@
 import { Image, StyleSheet, View } from "react-native";
 import Mapbox from "@rnmapbox/maps";
-import axios from "axios";
 
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchAddresses } from "./api";
 import MapPoint from "./components/MapPoint";
 import AddressSearchForm from "./components/AddressSearchForm";
@@ -17,12 +16,11 @@ Mapbox.setAccessToken(
 
 export default function App() {
   const [listOfAddresses, setListOfAddresses] = useState([]);
+  const mapRef = useRef(null);
 
   const getAllAddresses = async () => {
     try {
       const data = await fetchAddresses();
-
-      console.log(data.map((addy) => addy.coordinates[0]));
       setListOfAddresses(data);
     } catch (error) {
       console.error(
@@ -37,31 +35,13 @@ export default function App() {
     getAllAddresses();
   }, []);
 
-  useEffect(() => {
-    const forwardGeocoding = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-            "67 plymouth ave braintree"
-          )}.json?access_token=pk.eyJ1IjoicGpmMTgyMiIsImEiOiJjbGZybHJsMXMwMmd3M3BwMmFiZXlvZjczIn0.68xXIxxj_-iONU42ihPWZA`
-        );
-
-        const coordinates =
-          response.data.features &&
-          response.data.features.length > 0 &&
-          response.data.features[0].geometry.coordinates;
-      } catch (error) {
-        console.error("Error during forward geocoding:", error);
-      }
-    };
-
-    forwardGeocoding();
-  }, []);
-
   return (
     <View style={styles.page}>
       <Image source={require("./assets/TatMap.png")} style={styles.logo} />
-      <AddressSearchForm />
+      <AddressSearchForm
+        setListOfAddresses={setListOfAddresses}
+        listOfAddresses={listOfAddresses}
+      />
       <View style={styles.container}>
         <Mapbox.MapView
           projection="globe"
@@ -69,9 +49,10 @@ export default function App() {
           style={styles.map}
           logoEnabled="false"
           scaleBarEnabled="false"
+          ref={mapRef}
         >
           {listOfAddresses.map((address) => (
-            <MapPoint address={address} key={address._id} />
+            <MapPoint address={address} key={address?._id} />
           ))}
         </Mapbox.MapView>
       </View>
