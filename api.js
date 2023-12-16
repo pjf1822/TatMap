@@ -1,8 +1,9 @@
+const url = "https://server-mapbox.onrender.com";
+// const url = "http://localhost:8000";
+
 const fetchAddresses = async () => {
   try {
-    const res = await fetch(
-      "https://server-mapbox.onrender.com/api/addresses/getall"
-    );
+    const res = await fetch(`${url}/api/addresses/getall`);
 
     if (!res.ok) {
       throw new Error("Failed to fetch addresses");
@@ -16,17 +17,15 @@ const fetchAddresses = async () => {
 };
 
 const createAddress = async (payload) => {
+  console.log(payload.coordinates.theLat);
   try {
-    const res = await fetch(
-      "https://server-mapbox.onrender.com/api/addresses/create",
-      {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await fetch(`${url}/api/addresses/create`, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!res.ok) {
       throw new Error("Something went wrong");
@@ -35,7 +34,7 @@ const createAddress = async (payload) => {
     return await res.json();
   } catch (error) {
     console.error(error);
-    throw error; // Re-throw the error so it can be handled by the calling code
+    throw error;
   }
 };
 const deleteAddress = async (id) => {
