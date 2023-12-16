@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "mapbox-nativo",
+    "name": "TatMap",
     "slug": "mapbox-nativo",
     "version": "1.0.0",
     "plugins": [
@@ -24,7 +24,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.pjf1822.mapbox-native"
+      "bundleIdentifier": "com.pjf1822.mapbox-native",
+      "buildNumber": "3"
     },
     "android": {
       "adaptiveIcon": {

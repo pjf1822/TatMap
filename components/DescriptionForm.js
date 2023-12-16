@@ -12,6 +12,8 @@ const DescriptionForm = ({
   setListOfAddresses,
   listOfAddresses,
   getAllAddresses,
+  setCoordinates,
+  setZoom,
 }) => {
   const autocompleteRef = useRef(null);
 
@@ -54,6 +56,8 @@ const DescriptionForm = ({
               listOfAddresses={listOfAddresses}
               handleChange={handleChange}
               autocompleteRef={autocompleteRef}
+              setCoordinates={setCoordinates}
+              setZoom={setZoom}
             />
           </View>
           <View style={styles.formTopHalf}>

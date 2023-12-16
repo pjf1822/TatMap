@@ -17,6 +17,8 @@ Mapbox.setAccessToken(
 export default function App() {
   const [listOfAddresses, setListOfAddresses] = useState([]);
   const mapRef = useRef(null);
+  const [coordinates, setCoordinates] = useState([-5, 55]);
+  const [zoom, setZoom] = useState(4);
 
   const getAllAddresses = async () => {
     try {
@@ -43,6 +45,8 @@ export default function App() {
         setListOfAddresses={setListOfAddresses}
         listOfAddresses={listOfAddresses}
         getAllAddresses={getAllAddresses}
+        setCoordinates={setCoordinates}
+        setZoom={setZoom}
       />
       <View style={styles.container}>
         <Mapbox.MapView
@@ -50,12 +54,14 @@ export default function App() {
           styleURL="mapbox://styles/pjf1822/clekajgr3000001l8y22r3psx"
           style={styles.map}
           logoEnabled="false"
+          localizeLabels={false}
           scaleBarEnabled="false"
           ref={mapRef}
         >
           {listOfAddresses.map((address) => (
             <MapPoint address={address} key={address?._id} />
           ))}
+          <Mapbox.Camera zoomLevel={zoom} centerCoordinate={coordinates} />
         </Mapbox.MapView>
       </View>
     </View>
@@ -75,6 +81,12 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+  },
+  button: {
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: "lightgray",
+    borderRadius: 5,
   },
   logo: {
     height: hp("13%"),
