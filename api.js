@@ -17,7 +17,6 @@ const fetchAddresses = async () => {
 };
 
 const createAddress = async (payload) => {
-  console.log(payload.coordinates.theLat);
   try {
     const res = await fetch(`${url}/api/addresses/create`, {
       method: "POST",

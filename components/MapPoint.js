@@ -1,14 +1,16 @@
 import { Image } from "react-native";
-import React from "react";
+import React, { useRef } from "react";
 import { PointAnnotation } from "@rnmapbox/maps";
 
 const MapPoint = ({ address }) => {
+  const markerRef = useRef(null);
+
   const onAnnotationSelected = (feature) => {
     console.log("Annotation selected:", feature);
   };
   return (
     <PointAnnotation
-      ref={(ref) => (this.markerRef = ref)}
+      ref={markerRef}
       id={address._id}
       coordinate={[address.coordinates[0], address.coordinates[1]]}
       title={"hey"}
@@ -17,7 +19,7 @@ const MapPoint = ({ address }) => {
     >
       <Image
         source={require("../assets/TatMachine.png")}
-        onLoad={() => this.markerRef.refresh()}
+        onLoad={() => markerRef.current.refresh()}
         style={{ width: 60, height: 60 }}
       />
     </PointAnnotation>
