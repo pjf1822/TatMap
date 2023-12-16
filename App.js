@@ -50,6 +50,7 @@ export default function App() {
           styleURL="mapbox://styles/pjf1822/clekajgr3000001l8y22r3psx"
           style={styles.map}
           logoEnabled="false"
+          localizeLabels={false}
           scaleBarEnabled="false"
           ref={mapRef}
         >
