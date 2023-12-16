@@ -8,7 +8,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { fetchAddresses } from "./api";
 import MapPoint from "./components/MapPoint";
-import AddressSearchForm from "./components/AddressSearchForm";
 import DescriptionForm from "./components/DescriptionForm";
 
 Mapbox.setAccessToken(
