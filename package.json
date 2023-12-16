@@ -8,7 +8,6 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "dev": "npx expo start --dev-client"
-
   },
   "dependencies": {
     "@rnmapbox/maps": "^10.1.1",
@@ -16,6 +15,7 @@
     "expo": "~49.0.15",
     "expo-dev-client": "^2.4.12",
     "expo-status-bar": "~1.6.0",
+    "formik": "^2.4.5",
     "react": "18.2.0",
     "react-native": "0.72.6",
     "react-native-google-places-autocomplete": "^2.5.6",

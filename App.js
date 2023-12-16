@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { fetchAddresses } from "./api";
 import MapPoint from "./components/MapPoint";
 import AddressSearchForm from "./components/AddressSearchForm";
+import DescriptionForm from "./components/DescriptionForm";
 
 Mapbox.setAccessToken(
   "pk.eyJ1IjoicGpmMTgyMiIsImEiOiJjbGZybHJsMXMwMmd3M3BwMmFiZXlvZjczIn0.68xXIxxj_-iONU42ihPWZA"
@@ -38,9 +39,11 @@ export default function App() {
   return (
     <View style={styles.page}>
       <Image source={require("./assets/TatMap.png")} style={styles.logo} />
-      <AddressSearchForm
+
+      <DescriptionForm
         setListOfAddresses={setListOfAddresses}
         listOfAddresses={listOfAddresses}
+        getAllAddresses={getAllAddresses}
       />
       <View style={styles.container}>
         <Mapbox.MapView
