@@ -3,7 +3,12 @@ import React, { useRef, useState } from "react";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import axios from "axios";
 
-const AddressSearchForm = ({ handleChange, autocompleteRef }) => {
+const AddressSearchForm = ({
+  handleChange,
+  autocompleteRef,
+  setCoordinates,
+  setZoom,
+}) => {
   const forwardGeocoding = async (address) => {
     try {
       const response = await axios.get(
@@ -17,6 +22,8 @@ const AddressSearchForm = ({ handleChange, autocompleteRef }) => {
         response?.data?.features?.length > 0 &&
         response?.data?.features[0]?.geometry.coordinates;
       if (coordinates) {
+        setCoordinates(coordinates);
+        setZoom(8);
         handleChange({ target: { name: "newCoords", value: coordinates } });
       }
     } catch (error) {

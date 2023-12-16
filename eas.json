@@ -3,6 +3,11 @@
     "version": ">= 5.9.1"
   },
   "build": {
+    "development-simulator": {
+      "distribution": "internal",
+      "releaseChannel": "development",
+      "developmentClient": true
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal"
