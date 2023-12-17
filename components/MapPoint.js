@@ -1,16 +1,29 @@
-import { Image, Text } from "react-native";
+import { Image, Text, Linking, View, TouchableOpacity } from "react-native";
 import React, { useRef, useState } from "react";
 import { Callout, PointAnnotation } from "@rnmapbox/maps";
-import Hyperlink from "react-native-hyperlink";
 
 const MapPoint = ({ address }) => {
   const markerRef = useRef(null);
   const [calloutVisible, setCalloutVisible] = useState(false);
 
-  console.log(address, "the address");
   const onAnnotationSelected = (feature) => {
     setCalloutVisible(true);
   };
+  const openLink = () => {
+    console.log("try ing to open");
+    if (address.link) {
+      const instagramProfile = `instagram://user?username=pjf1822`;
+
+      Linking.canOpenURL(instagramProfile).then((supported) => {
+        if (supported) {
+          Linking.openURL(instagramProfile);
+        } else {
+          console.error("Instagram app is not installed.");
+        }
+      });
+    }
+  };
+
   return (
     <PointAnnotation
       ref={markerRef}
@@ -30,12 +43,15 @@ const MapPoint = ({ address }) => {
         contentStyle={{ borderRadius: 5, backgroundColor: "white" }}
         style={{ backgroundColor: "white" }}
       >
-        <Hyperlink linkText={"hey"} linkDefault={true}>
-          <Text style={{ fontSize: 15 }}>
-            This text will be parsed to check for clickable strings like
-            {address.link} and made clickable.
-          </Text>
-        </Hyperlink>
+        <TouchableOpacity
+          style={{ height: 80, width: 80, backgroundColor: "yellow" }}
+          onPress={() => {
+            console.log("TouchableOpacity pressed");
+            openLink();
+          }}
+        >
+          <Text>hey</Text>
+        </TouchableOpacity>
       </Callout>
     </PointAnnotation>
   );

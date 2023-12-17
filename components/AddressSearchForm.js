@@ -1,5 +1,5 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
-import React, { useRef, useState } from "react";
+import { View, StyleSheet } from "react-native";
+import React from "react";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import axios from "axios";
 

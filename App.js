@@ -1,6 +1,5 @@
 import { Image, StyleSheet, View } from "react-native";
 import Mapbox from "@rnmapbox/maps";
-
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -23,6 +22,7 @@ export default function App() {
   const getAllAddresses = async () => {
     try {
       const data = await fetchAddresses();
+      Mapbox.setTelemetryEnabled(false);
       setListOfAddresses(data);
     } catch (error) {
       console.error(
@@ -37,6 +37,16 @@ export default function App() {
     getAllAddresses();
   }, []);
 
+  const handleMapIdle = async () => {
+    if (mapRef.current) {
+      const centerPointInView = await mapRef.current.getPointInView([0.5, 0.5]);
+      const centerCoordinate = await mapRef.current.getCoordinateFromView(
+        centerPointInView
+      );
+
+      console.log("Center Coordinate:", centerCoordinate);
+    }
+  };
   return (
     <View style={styles.page}>
       <Image source={require("./assets/TatMap.png")} style={styles.logo} />
@@ -57,10 +67,12 @@ export default function App() {
           localizeLabels={false}
           scaleBarEnabled="false"
           ref={mapRef}
+          onMapIdle={handleMapIdle}
         >
           {listOfAddresses.map((address) => (
             <MapPoint address={address} key={address?._id} />
           ))}
+
           <Mapbox.Camera zoomLevel={zoom} centerCoordinate={coordinates} />
         </Mapbox.MapView>
       </View>
