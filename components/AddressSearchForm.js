@@ -23,27 +23,35 @@ const AddressSearchForm = ({
         response?.data?.features[0]?.geometry.coordinates;
       if (coordinates) {
         setCoordinates(coordinates);
-        setZoom(8);
+        setZoom(10);
         handleChange({ target: { name: "newCoords", value: coordinates } });
       }
     } catch (error) {
       console.error("Error during forward geocoding:", error);
     }
   };
+  const isInputEmpty = () => {
+    const inputValue = autocompleteRef.current?.getAddressText() || "";
+    console.log(inputValue, "whatever this is ");
+  };
 
   return (
     <View style={styles.formWrapper}>
       <GooglePlacesAutocomplete
-        placeholder="Search"
+        placeholder="Search Address"
         onPress={(data, details = null) => {
           forwardGeocoding(data?.description);
         }}
+        onFail={(error) => {
+          console.error("Google Places Autocomplete failed:", error);
+        }}
         query={{
-          key: "AIzaSyC8SOXrOo0QTh9q6rDLqolhxoUeJWT-0Ms",
+          key: "AIzaSyAEg44iVbUHQP7x9Qw6r_ukiy18taLCuzE",
           language: "en",
         }}
         ref={autocompleteRef}
       />
+      {isInputEmpty()}
     </View>
   );
 };

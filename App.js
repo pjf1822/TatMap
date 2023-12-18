@@ -8,6 +8,8 @@ import { useEffect, useRef, useState } from "react";
 import { fetchAddresses } from "./api";
 import MapPoint from "./components/MapPoint";
 import DescriptionForm from "./components/DescriptionForm";
+import TemporaryPoint from "./components/TemporaryPoint";
+import BottomForm from "./components/BottomForm";
 
 Mapbox.setAccessToken(
   "pk.eyJ1IjoicGpmMTgyMiIsImEiOiJjbGZybHJsMXMwMmd3M3BwMmFiZXlvZjczIn0.68xXIxxj_-iONU42ihPWZA"
@@ -15,9 +17,11 @@ Mapbox.setAccessToken(
 
 export default function App() {
   const [listOfAddresses, setListOfAddresses] = useState([]);
-  const mapRef = useRef(null);
-  const [coordinates, setCoordinates] = useState([-5, 55]);
+  const [selectedId, setSelectedId] = useState("");
+  // two states for when you select an address in the google address text input
+  const [coordinates, setCoordinates] = useState(null);
   const [zoom, setZoom] = useState(4);
+  const mapRef = useRef(null);
 
   const getAllAddresses = async () => {
     try {
@@ -44,9 +48,17 @@ export default function App() {
         centerPointInView
       );
 
-      console.log("Center Coordinate:", centerCoordinate);
+      // console.log("Center Coordinate:", centerCoordinate);
     }
   };
+
+  const handleLongPress = async (event) => {
+    const { geometry } = event;
+    const longPressCoordinates = geometry.coordinates;
+
+    // console.log("Long Press Coordinates:", longPressCoordinates);
+  };
+
   return (
     <View style={styles.page}>
       <Image source={require("./assets/TatMap.png")} style={styles.logo} />
@@ -58,6 +70,14 @@ export default function App() {
         setCoordinates={setCoordinates}
         setZoom={setZoom}
       />
+      {selectedId && (
+        <BottomForm
+          selectedId={selectedId}
+          getAllAddresses={getAllAddresses}
+          listOfAddresses={listOfAddresses}
+        />
+      )}
+
       <View style={styles.container}>
         <Mapbox.MapView
           projection="globe"
@@ -68,10 +88,17 @@ export default function App() {
           scaleBarEnabled="false"
           ref={mapRef}
           onMapIdle={handleMapIdle}
+          onLongPress={handleLongPress}
+          onPress={() => setSelectedId("")}
         >
           {listOfAddresses.map((address) => (
-            <MapPoint address={address} key={address?._id} />
+            <MapPoint
+              address={address}
+              key={address?._id}
+              setSelectedId={setSelectedId}
+            />
           ))}
+          <TemporaryPoint coordinates={coordinates} />
 
           <Mapbox.Camera zoomLevel={zoom} centerCoordinate={coordinates} />
         </Mapbox.MapView>
@@ -93,12 +120,6 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
-  },
-  button: {
-    marginTop: 10,
-    padding: 10,
-    backgroundColor: "lightgray",
-    borderRadius: 5,
   },
   logo: {
     height: hp("13%"),
