@@ -43,6 +43,7 @@ const DescriptionForm = ({
               newCoords: [],
             },
           });
+          setCoordinates(null);
         } catch (error) {
           console.error("Error creating address:", error);
         }
@@ -87,11 +88,14 @@ const styles = StyleSheet.create({
     width: wp("70%"),
     top: hp("4%"),
     right: wp("0%"),
+    // height: hp("30%"),
+    display: "flex",
+    justifyContent: "space-between",
     zIndex: 99,
-    backgroundColor: "blue",
+    // backgroundColor: "blue",
   },
-  formTopHalf: {},
-  formBottomHalf: {},
+  formTopHalf: { backgroundColor: "yellow" },
+  formBottomHalf: { backgroundColor: "red" },
 });
 
 export default DescriptionForm;

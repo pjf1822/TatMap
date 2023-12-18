@@ -10,9 +10,9 @@ const MapPoint = ({ address }) => {
     setCalloutVisible(true);
   };
   const openLink = () => {
-    console.log("try ing to open");
+    // console.log(address);
     if (address.link) {
-      const instagramProfile = `instagram://user?username=pjf1822`;
+      const instagramProfile = `https://www.instagram.com/pjf1822/?hl=en`;
 
       Linking.canOpenURL(instagramProfile).then((supported) => {
         if (supported) {
@@ -27,31 +27,26 @@ const MapPoint = ({ address }) => {
   return (
     <PointAnnotation
       ref={markerRef}
-      id={address._id}
-      coordinate={[address.coordinates[0], address.coordinates[1]]}
+      id={address?._id}
+      coordinate={[address?.coordinates[0], address?.coordinates[1]]}
       title={"hey"}
       snippet={"hey"}
       onSelected={onAnnotationSelected}
     >
       <Image
         source={require("../assets/TatMachine.png")}
-        onLoad={() => markerRef.current.refresh()}
+        onLoad={() => markerRef?.current?.refresh()}
         style={{ width: 60, height: 60 }}
       />
       <Callout
-        title={`${address.description}`}
         contentStyle={{ borderRadius: 5, backgroundColor: "white" }}
         style={{ backgroundColor: "white" }}
       >
-        <TouchableOpacity
-          style={{ height: 80, width: 80, backgroundColor: "yellow" }}
-          onPress={() => {
-            console.log("TouchableOpacity pressed");
-            openLink();
-          }}
-        >
-          <Text>hey</Text>
-        </TouchableOpacity>
+        <Text>{address?.description}</Text>
+        <Image
+          style={{ height: 80, width: 80 }}
+          source={require("../assets/RAM.png")}
+        />
       </Callout>
     </PointAnnotation>
   );

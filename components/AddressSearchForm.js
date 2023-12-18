@@ -22,8 +22,9 @@ const AddressSearchForm = ({
         response?.data?.features?.length > 0 &&
         response?.data?.features[0]?.geometry.coordinates;
       if (coordinates) {
+        console.log(coordinates, "inside the search form");
         setCoordinates(coordinates);
-        setZoom(8);
+        setZoom(10);
         handleChange({ target: { name: "newCoords", value: coordinates } });
       }
     } catch (error) {
@@ -34,12 +35,16 @@ const AddressSearchForm = ({
   return (
     <View style={styles.formWrapper}>
       <GooglePlacesAutocomplete
-        placeholder="Search"
+        placeholder="Search Address"
         onPress={(data, details = null) => {
           forwardGeocoding(data?.description);
         }}
+        onFail={(error) => {
+          console.error("Google Places Autocomplete failed:", error);
+          // Handle the failure here, e.g., show an error message to the user.
+        }}
         query={{
-          key: "AIzaSyC8SOXrOo0QTh9q6rDLqolhxoUeJWT-0Ms",
+          key: "AIzaSyAEg44iVbUHQP7x9Qw6r_ukiy18taLCuzE",
           language: "en",
         }}
         ref={autocompleteRef}
