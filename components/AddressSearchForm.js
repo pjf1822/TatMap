@@ -31,8 +31,8 @@ const AddressSearchForm = ({
     }
   };
   const isInputEmpty = () => {
-    const inputValue = autocompleteRef.current?.getAddressText();
-    console.log(inputValue);
+    const inputValue = autocompleteRef.current?.getAddressText() || "";
+    console.log(inputValue, "whatever this is ");
   };
 
   return (

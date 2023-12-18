@@ -9,6 +9,8 @@ import AddressSearchForm from "./AddressSearchForm";
 import { createAddress } from "../api";
 import { showToast } from "../helpers";
 import Toast from "react-native-root-toast";
+import MyButton from "./MyButton";
+import { colors } from "../theme";
 
 const DescriptionForm = ({
   setListOfAddresses,
@@ -95,7 +97,7 @@ const DescriptionForm = ({
               placeholder="Shop Link"
             />
 
-            <Button onPress={handleSubmit} title="Submit" />
+            <MyButton onPress={handleSubmit} text="Submit" />
           </View>
         </View>
       )}
@@ -110,11 +112,10 @@ const styles = StyleSheet.create({
     width: wp("70%"),
     top: hp("4%"),
     right: wp("0%"),
-    // height: hp("30%"),
     display: "flex",
     justifyContent: "space-between",
     zIndex: 99,
-    // backgroundColor: "blue",
+    backgroundColor: colors.rose,
   },
   formTextInput: {
     borderWidth: 2,
@@ -123,10 +124,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 10,
     marginBottom: 10,
-    backgroundColor: "white",
   },
-  formTopHalf: { backgroundColor: "yellow" },
-  formBottomHalf: { backgroundColor: "red" },
 });
 
 export default DescriptionForm;

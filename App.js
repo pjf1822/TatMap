@@ -9,6 +9,7 @@ import { fetchAddresses } from "./api";
 import MapPoint from "./components/MapPoint";
 import DescriptionForm from "./components/DescriptionForm";
 import TemporaryPoint from "./components/TemporaryPoint";
+import BottomForm from "./components/BottomForm";
 
 Mapbox.setAccessToken(
   "pk.eyJ1IjoicGpmMTgyMiIsImEiOiJjbGZybHJsMXMwMmd3M3BwMmFiZXlvZjczIn0.68xXIxxj_-iONU42ihPWZA"
@@ -16,14 +17,16 @@ Mapbox.setAccessToken(
 
 export default function App() {
   const [listOfAddresses, setListOfAddresses] = useState([]);
-  const mapRef = useRef(null);
+  const [selectedId, setSelectedId] = useState("");
+  // two states for when you select an address in the google address text input
   const [coordinates, setCoordinates] = useState(null);
   const [zoom, setZoom] = useState(4);
+  const mapRef = useRef(null);
 
   const getAllAddresses = async () => {
     try {
       const data = await fetchAddresses();
-      Mapbox.setTelemetryEnabled(true);
+      Mapbox.setTelemetryEnabled(false);
       setListOfAddresses(data);
     } catch (error) {
       console.error(
@@ -67,6 +70,14 @@ export default function App() {
         setCoordinates={setCoordinates}
         setZoom={setZoom}
       />
+      {selectedId && (
+        <BottomForm
+          selectedId={selectedId}
+          getAllAddresses={getAllAddresses}
+          listOfAddresses={listOfAddresses}
+        />
+      )}
+
       <View style={styles.container}>
         <Mapbox.MapView
           projection="globe"
@@ -78,9 +89,14 @@ export default function App() {
           ref={mapRef}
           onMapIdle={handleMapIdle}
           onLongPress={handleLongPress}
+          onPress={() => setSelectedId("")}
         >
           {listOfAddresses.map((address) => (
-            <MapPoint address={address} key={address?._id} />
+            <MapPoint
+              address={address}
+              key={address?._id}
+              setSelectedId={setSelectedId}
+            />
           ))}
           <TemporaryPoint coordinates={coordinates} />
 
