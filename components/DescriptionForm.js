@@ -7,6 +7,8 @@ import {
 } from "react-native-responsive-screen";
 import AddressSearchForm from "./AddressSearchForm";
 import { createAddress } from "../api";
+import { showToast } from "../helpers";
+import Toast from "react-native-root-toast";
 
 const DescriptionForm = ({
   setListOfAddresses,
@@ -25,6 +27,21 @@ const DescriptionForm = ({
         newCoords: [],
       }}
       onSubmit={async (values, actions) => {
+        const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+
+        if (!values.description || !values.link || !values.newCoords.length) {
+          showToast(
+            "Please fill out all of the fields",
+            false,
+            Toast.positions.TOP
+          );
+          return;
+        }
+        if (values.link && !urlRegex.test(values.link)) {
+          showToast("Link needs to be a URL", false, Toast.positions.TOP);
+          return;
+        }
+
         try {
           await createAddress({
             description: values?.description,
@@ -44,7 +61,10 @@ const DescriptionForm = ({
             },
           });
           setCoordinates(null);
+          showToast("Shop added!", true, Toast.positions.TOP);
         } catch (error) {
+          showToast("Something went wrong!", false, Toast.positions.TOP);
+
           console.error("Error creating address:", error);
         }
       }}
@@ -53,8 +73,6 @@ const DescriptionForm = ({
         <View style={styles.formik}>
           <View style={styles.formBottomHalf}>
             <AddressSearchForm
-              setListOfAddresses={setListOfAddresses}
-              listOfAddresses={listOfAddresses}
               handleChange={handleChange}
               autocompleteRef={autocompleteRef}
               setCoordinates={setCoordinates}
@@ -66,11 +84,15 @@ const DescriptionForm = ({
               onChangeText={handleChange("description")}
               onBlur={handleBlur("description")}
               value={values?.description}
+              style={styles.formTextInput}
+              placeholder="Description"
             />
             <TextInput
               onChangeText={handleChange("link")}
               onBlur={handleBlur("link")}
               value={values?.link}
+              style={styles.formTextInput}
+              placeholder="Shop Link"
             />
 
             <Button onPress={handleSubmit} title="Submit" />
@@ -93,6 +115,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     zIndex: 99,
     // backgroundColor: "blue",
+  },
+  formTextInput: {
+    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: "black",
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 10,
+    backgroundColor: "white",
   },
   formTopHalf: { backgroundColor: "yellow" },
   formBottomHalf: { backgroundColor: "red" },

@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import React, { useRef } from "react";
 import { PointAnnotation } from "@rnmapbox/maps";
 
@@ -15,9 +15,11 @@ const TemporaryPoint = ({ coordinates }) => {
           title={"hey"}
           snippet={"hey"}
         >
-          <View
-            style={{ height: 20, width: 20, backgroundColor: "yellow" }}
-          ></View>
+          <Image
+            style={{ height: 60, aspectRatio: 1 }}
+            source={require("../assets/location.png")}
+            onLoad={() => markerRef?.current?.refresh()}
+          />
         </PointAnnotation>
       )}
     </>

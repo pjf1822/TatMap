@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { fetchAddresses } from "./api";
 import MapPoint from "./components/MapPoint";
 import DescriptionForm from "./components/DescriptionForm";
-import TemporaryPoint from "./TemporaryPoint";
+import TemporaryPoint from "./components/TemporaryPoint";
 
 Mapbox.setAccessToken(
   "pk.eyJ1IjoicGpmMTgyMiIsImEiOiJjbGZybHJsMXMwMmd3M3BwMmFiZXlvZjczIn0.68xXIxxj_-iONU42ihPWZA"
@@ -104,12 +104,6 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
-  },
-  button: {
-    marginTop: 10,
-    padding: 10,
-    backgroundColor: "lightgray",
-    borderRadius: 5,
   },
   logo: {
     height: hp("13%"),
