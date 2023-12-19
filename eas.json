@@ -6,8 +6,13 @@
     "development-simulator": {
       "distribution": "internal",
       "releaseChannel": "development",
-      "developmentClient": true
+      "developmentClient": true,
+      "ios": {
+        "simulator": true
+      }
+      
     },
+
     "development": {
       "developmentClient": true,
       "distribution": "internal"

@@ -15,6 +15,10 @@ import { fetchAddresses } from "./api";
 import MapPoint from "./components/MapPoint";
 import TemporaryPoint from "./components/TemporaryPoint";
 import BottomFormWrappers from "./components/BottomFormWrappers";
+import {
+  DeviceAddressesProvider,
+  useDeviceAddresses,
+} from "./AddressesContext";
 
 Mapbox.setAccessToken(
   "pk.eyJ1IjoicGpmMTgyMiIsImEiOiJjbGZybHJsMXMwMmd3M3BwMmFiZXlvZjczIn0.68xXIxxj_-iONU42ihPWZA"
@@ -64,50 +68,54 @@ export default function App() {
     // console.log("Long Press Coordinates:", longPressCoordinates);
   };
 
+  const { addDeviceAddressId } = useDeviceAddresses();
+
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <View style={styles.page}>
-        <Image source={require("./assets/TatMap.png")} style={styles.logo} />
+    <DeviceAddressesProvider>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
+        <View style={styles.page}>
+          <Image source={require("./assets/TatMap.png")} style={styles.logo} />
 
-        <BottomFormWrappers
-          getAllAddresses={getAllAddresses}
-          setCoordinates={setCoordinates}
-          setZoom={setZoom}
-          listOfAddresses={listOfAddresses}
-          selectedId={selectedId}
-          setSelectedId={setSelectedId}
-        />
+          <BottomFormWrappers
+            getAllAddresses={getAllAddresses}
+            setCoordinates={setCoordinates}
+            setZoom={setZoom}
+            listOfAddresses={listOfAddresses}
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}
+          />
 
-        <View style={styles.container}>
-          <Mapbox.MapView
-            projection="globe"
-            styleURL="mapbox://styles/pjf1822/clekajgr3000001l8y22r3psx"
-            style={styles.map}
-            logoEnabled="false"
-            localizeLabels={false}
-            scaleBarEnabled="false"
-            ref={mapRef}
-            onMapIdle={handleMapIdle}
-            onLongPress={handleLongPress}
-            onPress={() => setSelectedId("")}
-          >
-            {listOfAddresses.map((address) => (
-              <MapPoint
-                address={address}
-                key={address?._id}
-                setSelectedId={setSelectedId}
-              />
-            ))}
-            <TemporaryPoint coordinates={coordinates} />
+          <View style={styles.container}>
+            <Mapbox.MapView
+              projection="globe"
+              styleURL="mapbox://styles/pjf1822/clekajgr3000001l8y22r3psx"
+              style={styles.map}
+              logoEnabled="false"
+              localizeLabels={false}
+              scaleBarEnabled="false"
+              ref={mapRef}
+              onMapIdle={handleMapIdle}
+              onLongPress={handleLongPress}
+              onPress={() => setSelectedId("")}
+            >
+              {listOfAddresses.map((address) => (
+                <MapPoint
+                  address={address}
+                  key={address?._id}
+                  setSelectedId={setSelectedId}
+                />
+              ))}
+              <TemporaryPoint coordinates={coordinates} />
 
-            <Mapbox.Camera zoomLevel={zoom} centerCoordinate={coordinates} />
-          </Mapbox.MapView>
+              <Mapbox.Camera zoomLevel={zoom} centerCoordinate={coordinates} />
+            </Mapbox.MapView>
+          </View>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </DeviceAddressesProvider>
   );
 }
 

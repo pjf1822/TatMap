@@ -1,17 +1,13 @@
 import { Formik } from "formik";
 import React, { useRef } from "react";
-import { View, TextInput, StyleSheet } from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { View, asyncStorage } from "react-native";
 import AddressSearchForm from "./AddressSearchForm";
 import { createAddress } from "../api";
 import { showToast } from "../helpers";
 import Toast from "react-native-root-toast";
 import MyButton from "./MyButton";
-import { colors } from "../theme";
 import MyTextInput from "./MyTextInput";
+import { useDeviceAddresses } from "../AddressesContext";
 
 const DescriptionForm = ({ getAllAddresses, setCoordinates, setZoom }) => {
   const autocompleteRef = useRef(null);
@@ -40,7 +36,7 @@ const DescriptionForm = ({ getAllAddresses, setCoordinates, setZoom }) => {
         }
 
         try {
-          await createAddress({
+          const response = await createAddress({
             description: values?.description,
             link: values?.link,
             coordinates: {
@@ -48,6 +44,8 @@ const DescriptionForm = ({ getAllAddresses, setCoordinates, setZoom }) => {
               theLat: String(values?.newCoords[1]),
             },
           });
+          addDeviceAddressId(response.address._id);
+
           getAllAddresses();
           autocompleteRef.current?.setAddressText("");
           actions.resetForm({
