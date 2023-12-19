@@ -1,23 +1,19 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Linking,
-} from "react-native";
+import { View, Text, StyleSheet, Linking } from "react-native";
 import React, { useEffect, useState } from "react";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
 import { deleteAddress } from "../api";
 import { showToast } from "../helpers";
 import Toast from "react-native-root-toast";
 import MyButton from "./MyButton";
 import { colors } from "../theme";
 
-const BottomForm = ({ selectedId, getAllAddresses, listOfAddresses }) => {
+const BottomForm = ({
+  selectedId,
+  getAllAddresses,
+  listOfAddresses,
+  setSelectedId,
+}) => {
   const [currentShop, setCurrentShop] = useState({});
+
   useEffect(() => {
     const shop = listOfAddresses.find((shop) => shop._id === selectedId);
     setCurrentShop(shop || {});
@@ -28,14 +24,13 @@ const BottomForm = ({ selectedId, getAllAddresses, listOfAddresses }) => {
     if (response.message === "Address deleted successfully!") {
       showToast("Deleted Shop!", true, Toast.positions.TOP);
       getAllAddresses();
+      setSelectedId("");
     } else {
       showToast("Something went wrong", false, Toast.positions.TOP);
     }
   };
 
-  console.log(currentShop);
   const openLink = () => {
-    // Check if the shop has a valid link
     if (currentShop?.link) {
       Linking.canOpenURL(currentShop.link).then((supported) => {
         if (supported) {
@@ -52,7 +47,7 @@ const BottomForm = ({ selectedId, getAllAddresses, listOfAddresses }) => {
   };
 
   return (
-    <View style={styles.bottomFormWrapper}>
+    <View>
       <Text style={{ color: colors.licorice, width: "100%" }}>
         {currentShop.description}
       </Text>
@@ -67,18 +62,6 @@ const BottomForm = ({ selectedId, getAllAddresses, listOfAddresses }) => {
 export default BottomForm;
 
 const styles = StyleSheet.create({
-  bottomFormWrapper: {
-    position: "absolute",
-    padding: 10,
-    width: wp("80%"),
-    top: hp("85%"),
-    left: wp("10%"),
-    zIndex: 99,
-    backgroundColor: colors.rose,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   bottomFormButtonsWrapper: {
     display: "flex",
     flexDirection: "column",

@@ -2,6 +2,7 @@ import { View, StyleSheet } from "react-native";
 import React from "react";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import axios from "axios";
+import { colors } from "../theme";
 
 const AddressSearchForm = ({
   handleChange,
@@ -32,12 +33,42 @@ const AddressSearchForm = ({
   };
   const isInputEmpty = () => {
     const inputValue = autocompleteRef.current?.getAddressText() || "";
-    console.log(inputValue, "whatever this is ");
+    // console.log(inputValue, "whatever this is ");
   };
 
   return (
-    <View style={styles.formWrapper}>
+    <View>
       <GooglePlacesAutocomplete
+        styles={{
+          textInputContainer: {
+            borderWidth: 2,
+            borderRadius: 10,
+            borderColor: "black",
+            padding: 10,
+            marginTop: 2,
+            marginBottom: 2,
+          },
+          predefinedPlacesDescription: {
+            color: "#1faadb",
+          },
+          poweredContainer: {
+            display: "none",
+          },
+
+          textInput: {
+            color: colors.licorice,
+          },
+          separator: {
+            height: 0.5,
+            backgroundColor: colors.blue,
+          },
+          row: {
+            placeholderColor: "yellow",
+            padding: 13,
+            height: 44,
+            flexDirection: "row",
+          },
+        }}
         placeholder="Search Address"
         onPress={(data, details = null) => {
           forwardGeocoding(data?.description);
@@ -45,6 +76,7 @@ const AddressSearchForm = ({
         onFail={(error) => {
           console.error("Google Places Autocomplete failed:", error);
         }}
+        suppressDefaultStyles={true}
         query={{
           key: "AIzaSyAEg44iVbUHQP7x9Qw6r_ukiy18taLCuzE",
           language: "en",
@@ -59,13 +91,5 @@ const AddressSearchForm = ({
 export default AddressSearchForm;
 
 const styles = StyleSheet.create({
-  formWrapper: {
-    // position: "absolute",
-    // padding: 10,
-    // width: wp("70%"),
-    // top: hp("4%"),
-    // right: wp("0%"),
-    // zIndex: 99,
-    // backgroundColor: "white",
-  },
+  formTextInput: {},
 });

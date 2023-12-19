@@ -1,6 +1,6 @@
 import { Formik } from "formik";
 import React, { useRef } from "react";
-import { View, TextInput, Button, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -11,14 +11,9 @@ import { showToast } from "../helpers";
 import Toast from "react-native-root-toast";
 import MyButton from "./MyButton";
 import { colors } from "../theme";
+import MyTextInput from "./MyTextInput";
 
-const DescriptionForm = ({
-  setListOfAddresses,
-  listOfAddresses,
-  getAllAddresses,
-  setCoordinates,
-  setZoom,
-}) => {
+const DescriptionForm = ({ getAllAddresses, setCoordinates, setZoom }) => {
   const autocompleteRef = useRef(null);
 
   return (
@@ -72,8 +67,8 @@ const DescriptionForm = ({
       }}
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
-        <View style={styles.formik}>
-          <View style={styles.formBottomHalf}>
+        <View>
+          <View>
             <AddressSearchForm
               handleChange={handleChange}
               autocompleteRef={autocompleteRef}
@@ -81,19 +76,17 @@ const DescriptionForm = ({
               setZoom={setZoom}
             />
           </View>
-          <View style={styles.formTopHalf}>
-            <TextInput
+          <View>
+            <MyTextInput
               onChangeText={handleChange("description")}
               onBlur={handleBlur("description")}
               value={values?.description}
-              style={styles.formTextInput}
               placeholder="Description"
             />
-            <TextInput
+            <MyTextInput
               onChangeText={handleChange("link")}
               onBlur={handleBlur("link")}
               value={values?.link}
-              style={styles.formTextInput}
               placeholder="Shop Link"
             />
 
@@ -104,27 +97,5 @@ const DescriptionForm = ({
     </Formik>
   );
 };
-
-const styles = StyleSheet.create({
-  formik: {
-    position: "absolute",
-    padding: 10,
-    width: wp("70%"),
-    top: hp("4%"),
-    right: wp("0%"),
-    display: "flex",
-    justifyContent: "space-between",
-    zIndex: 99,
-    backgroundColor: colors.rose,
-  },
-  formTextInput: {
-    borderWidth: 2,
-    borderRadius: 10,
-    borderColor: "black",
-    padding: 10,
-    marginTop: 10,
-    marginBottom: 10,
-  },
-});
 
 export default DescriptionForm;

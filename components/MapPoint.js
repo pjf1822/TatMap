@@ -1,6 +1,6 @@
 import { Image } from "react-native";
 import React, { useRef } from "react";
-import { Callout, PointAnnotation } from "@rnmapbox/maps";
+import { PointAnnotation } from "@rnmapbox/maps";
 
 const MapPoint = ({ address, setSelectedId }) => {
   const markerRef = useRef(null);
@@ -24,16 +24,6 @@ const MapPoint = ({ address, setSelectedId }) => {
         onLoad={() => markerRef?.current?.refresh()}
         style={{ width: 60, height: 60 }}
       />
-      {/* <Callout
-        contentStyle={{ borderRadius: 5, backgroundColor: "white" }}
-        style={{ backgroundColor: "white" }}
-      >
-        <Text>{address?._id}</Text>
-        <Image
-          style={{ height: 80, width: 80 }}
-          source={require("../assets/RAM.png")}
-        />
-      </Callout> */}
     </PointAnnotation>
   );
 };
