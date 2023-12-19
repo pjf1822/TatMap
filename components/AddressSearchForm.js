@@ -1,8 +1,7 @@
 import { View, StyleSheet } from "react-native";
 import React from "react";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import axios from "axios";
-import { colors } from "../theme";
+import { colors, regFont } from "../theme";
 import { forwardGeocoding } from "../helpers";
 
 const AddressSearchForm = ({
@@ -36,6 +35,7 @@ const AddressSearchForm = ({
 
           textInput: {
             color: colors.licorice,
+            fontFamily: regFont.fontFamily,
           },
           separator: {
             height: 0.9,
@@ -46,6 +46,7 @@ const AddressSearchForm = ({
             padding: 13,
             height: 44,
             flexDirection: "row",
+            fontFamily: regFont.fontFamily,
           },
         }}
         placeholder="Search Address"
@@ -73,7 +74,3 @@ const AddressSearchForm = ({
 };
 
 export default AddressSearchForm;
-
-const styles = StyleSheet.create({
-  formTextInput: {},
-});

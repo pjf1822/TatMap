@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import { deleteShop, openLink } from "../helpers";
 import MyButton from "./MyButton";
-import { colors } from "../theme";
+import { colors, regFont } from "../theme";
 import { useDeviceAddresses } from "../AddressesContext";
 
 const BottomForm = ({ selectedId, getAllAddresses, setSelectedId }) => {
@@ -51,7 +51,9 @@ const styles = StyleSheet.create({
     display: "flex",
     width: "100%",
     textAlign: "center",
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 7,
+    marginBottom: 7,
+    fontFamily: regFont.fontFamily,
+    fontSize: 20,
   },
 });

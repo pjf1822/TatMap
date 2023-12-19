@@ -99,6 +99,7 @@ export const getAllAddresses = async (setDeviceAddressIds) => {
     // setListOfAddresses(data);
     setDeviceAddressIds(data);
   } catch (error) {
+    showToast("Check your network please", false, Toast.positions.TOP);
     console.error("An error occurred while fetching the transactions:", error);
   }
 };

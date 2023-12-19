@@ -1,6 +1,6 @@
 import { StyleSheet, TextInput } from "react-native";
 import React from "react";
-import { colors } from "../theme";
+import { colors, regFont } from "../theme";
 
 const MyTextInput = ({ onChangeText, onBlur, value, placeholder }) => {
   return (
@@ -26,5 +26,6 @@ const styles = StyleSheet.create({
     marginTop: 2,
     marginBottom: 2,
     color: colors.licorice,
+    fontFamily: regFont.fontFamily,
   },
 });
