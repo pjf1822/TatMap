@@ -79,12 +79,13 @@ export const openLink = (currentShop) => {
 export const deleteShop = async (
   getAllAddresses,
   setSelectedId,
-  selectedId
+  selectedId,
+  setDeviceAddressIds
 ) => {
   const response = await deleteAddress(selectedId);
   if (response.message === "Address deleted successfully!") {
     showToast("Deleted Shop!", true, Toast.positions.TOP);
-    getAllAddresses();
+    getAllAddresses(setDeviceAddressIds);
     setSelectedId("");
   } else {
     showToast("Something went wrong", false, Toast.positions.TOP);

@@ -38,8 +38,8 @@ const AddressSearchForm = ({
             color: colors.licorice,
           },
           separator: {
-            height: 0.5,
-            backgroundColor: colors.blue,
+            height: 0.9,
+            backgroundColor: colors.gray,
           },
           row: {
             placeholderColor: "yellow",

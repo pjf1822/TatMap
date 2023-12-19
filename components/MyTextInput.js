@@ -10,7 +10,7 @@ const MyTextInput = ({ onChangeText, onBlur, value, placeholder }) => {
       value={value}
       style={styles.formTextInput}
       placeholder={placeholder}
-      placeholderTextColor="rgba(0, 0, 0, 0.3)"
+      placeholderTextColor="rgba(100, 90, 80, 0.5)"
     />
   );
 };

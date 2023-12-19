@@ -7,7 +7,7 @@ import { useDeviceAddresses } from "../AddressesContext";
 
 const BottomForm = ({ selectedId, getAllAddresses, setSelectedId }) => {
   const [currentShop, setCurrentShop] = useState({});
-  const { deviceAddressIds } = useDeviceAddresses();
+  const { deviceAddressIds, setDeviceAddressIds } = useDeviceAddresses();
 
   useEffect(() => {
     const shop = deviceAddressIds.find((shop) => shop._id === selectedId);
@@ -16,16 +16,21 @@ const BottomForm = ({ selectedId, getAllAddresses, setSelectedId }) => {
 
   return (
     <View>
-      <Text style={{ color: colors.licorice, width: "100%" }}>
-        {currentShop.description}
-      </Text>
+      <Text style={styles.bottomFormText}>{currentShop.description}</Text>
       <View style={styles.bottomFormButtonsWrapper}>
         <MyButton
           onPress={() => openLink(currentShop)}
           text={"Go to shops Instagram page"}
         />
         <MyButton
-          onPress={() => deleteShop(getAllAddresses, setSelectedId, selectedId)}
+          onPress={() =>
+            deleteShop(
+              getAllAddresses,
+              setSelectedId,
+              selectedId,
+              setDeviceAddressIds
+            )
+          }
           text={"Delete Shop"}
         />
       </View>
@@ -39,5 +44,14 @@ const styles = StyleSheet.create({
   bottomFormButtonsWrapper: {
     display: "flex",
     flexDirection: "column",
+  },
+  bottomFormText: {
+    color: colors.licorice,
+    width: "100%",
+    display: "flex",
+    width: "100%",
+    textAlign: "center",
+    marginTop: 10,
+    marginBottom: 10,
   },
 });

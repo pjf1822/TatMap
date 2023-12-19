@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "space-between",
     zIndex: 99,
-    backgroundColor: colors.rose,
+    backgroundColor: colors.tan,
   },
 });
