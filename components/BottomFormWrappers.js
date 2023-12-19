@@ -13,7 +13,6 @@ const BottomFormWrappers = ({
   setCoordinates,
   setZoom,
   selectedId,
-  listOfAddresses,
   setSelectedId,
 }) => {
   return (
@@ -22,7 +21,6 @@ const BottomFormWrappers = ({
         <BottomForm
           selectedId={selectedId}
           getAllAddresses={getAllAddresses}
-          listOfAddresses={listOfAddresses}
           setSelectedId={setSelectedId}
         />
       ) : (

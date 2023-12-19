@@ -7,7 +7,6 @@ import { showToast } from "../helpers";
 import Toast from "react-native-root-toast";
 import MyButton from "./MyButton";
 import MyTextInput from "./MyTextInput";
-import { useDeviceAddresses } from "../AddressesContext";
 
 const DescriptionForm = ({ getAllAddresses, setCoordinates, setZoom }) => {
   const autocompleteRef = useRef(null);
@@ -44,7 +43,6 @@ const DescriptionForm = ({ getAllAddresses, setCoordinates, setZoom }) => {
               theLat: String(values?.newCoords[1]),
             },
           });
-          addDeviceAddressId(response.address._id);
 
           getAllAddresses();
           autocompleteRef.current?.setAddressText("");

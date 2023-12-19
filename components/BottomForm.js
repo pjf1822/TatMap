@@ -5,19 +5,16 @@ import { showToast } from "../helpers";
 import Toast from "react-native-root-toast";
 import MyButton from "./MyButton";
 import { colors } from "../theme";
+import { useDeviceAddresses } from "../AddressesContext";
 
-const BottomForm = ({
-  selectedId,
-  getAllAddresses,
-  listOfAddresses,
-  setSelectedId,
-}) => {
+const BottomForm = ({ selectedId, getAllAddresses, setSelectedId }) => {
   const [currentShop, setCurrentShop] = useState({});
+  const { deviceAddressIds } = useDeviceAddresses();
 
   useEffect(() => {
-    const shop = listOfAddresses.find((shop) => shop._id === selectedId);
+    const shop = deviceAddressIds.find((shop) => shop._id === selectedId);
     setCurrentShop(shop || {});
-  }, [selectedId, listOfAddresses]);
+  }, [selectedId, deviceAddressIds]);
 
   const deleteShop = async () => {
     const response = await deleteAddress(selectedId);
