@@ -48,7 +48,6 @@ export const DeviceAddressesProvider = ({ children }) => {
       console.error("Error saving deviceAddressIds to AsyncStorage:", error);
     }
   };
-  console.log(deviceAddressIds, "all the ids ");
   return (
     <DeviceAddressesContext.Provider
       value={{ deviceAddressIds, addDeviceAddressId, setDeviceAddressIds }}

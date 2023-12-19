@@ -1,8 +1,6 @@
-import { View, Text, StyleSheet, Linking } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
-import { deleteAddress } from "../api";
-import { showToast } from "../helpers";
-import Toast from "react-native-root-toast";
+import { deleteShop, openLink } from "../helpers";
 import MyButton from "./MyButton";
 import { colors } from "../theme";
 import { useDeviceAddresses } from "../AddressesContext";
@@ -16,41 +14,20 @@ const BottomForm = ({ selectedId, getAllAddresses, setSelectedId }) => {
     setCurrentShop(shop || {});
   }, [selectedId, deviceAddressIds]);
 
-  const deleteShop = async () => {
-    const response = await deleteAddress(selectedId);
-    if (response.message === "Address deleted successfully!") {
-      showToast("Deleted Shop!", true, Toast.positions.TOP);
-      getAllAddresses();
-      setSelectedId("");
-    } else {
-      showToast("Something went wrong", false, Toast.positions.TOP);
-    }
-  };
-
-  const openLink = () => {
-    if (currentShop?.link) {
-      Linking.canOpenURL(currentShop.link).then((supported) => {
-        if (supported) {
-          Linking.openURL(currentShop.link);
-        } else {
-          showToast(
-            "Cannot open the link. App not installed.",
-            false,
-            Toast.positions.TOP
-          );
-        }
-      });
-    }
-  };
-
   return (
     <View>
       <Text style={{ color: colors.licorice, width: "100%" }}>
         {currentShop.description}
       </Text>
       <View style={styles.bottomFormButtonsWrapper}>
-        <MyButton onPress={openLink} text={"Go to shops Instagram page"} />
-        <MyButton onPress={deleteShop} text={"Delete Shop"} />
+        <MyButton
+          onPress={() => openLink(currentShop)}
+          text={"Go to shops Instagram page"}
+        />
+        <MyButton
+          onPress={() => deleteShop(getAllAddresses, setSelectedId, selectedId)}
+          text={"Delete Shop"}
+        />
       </View>
     </View>
   );
