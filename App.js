@@ -17,6 +17,7 @@ export default function App() {
       try {
         await Font.loadAsync({
           Quicksand: require("./assets/Quicksand.ttf"),
+          QuicksandBold: require("./assets/Quicksand-SemiBold.ttf"),
         });
       } catch (e) {
         console.warn(e);

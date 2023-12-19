@@ -1,5 +1,5 @@
 import Toast from "react-native-root-toast";
-import { colors } from "./theme";
+import { colors, regFont } from "./theme";
 import { createAddress, deleteAddress, fetchAddresses } from "./api";
 import { Linking } from "react-native";
 import Mapbox from "@rnmapbox/maps";
@@ -12,6 +12,7 @@ export const showToast = (toastMessage, success, position) => {
     backgroundColor: success === true ? colors.blue : colors.licorice,
     textColor: colors.tan,
     opacity: 1,
+    fontFamily: regFont.fontFamilyBold,
   });
 };
 

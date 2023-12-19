@@ -35,7 +35,7 @@ const AddressSearchForm = ({
 
           textInput: {
             color: colors.licorice,
-            fontFamily: regFont.fontFamily,
+            fontFamily: regFont.fontFamilyBold,
           },
           separator: {
             height: 0.9,
@@ -46,7 +46,7 @@ const AddressSearchForm = ({
             padding: 13,
             height: 44,
             flexDirection: "row",
-            fontFamily: regFont.fontFamily,
+            fontFamily: regFont.fontFamilyBold,
           },
         }}
         placeholder="Search Address"

@@ -26,6 +26,6 @@ const styles = StyleSheet.create({
     marginTop: 2,
     marginBottom: 2,
     color: colors.licorice,
-    fontFamily: regFont.fontFamily,
+    fontFamily: regFont.fontFamilyBold,
   },
 });

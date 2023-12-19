@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 7,
     marginBottom: 7,
-    fontFamily: regFont.fontFamily,
+    fontFamily: regFont.fontFamilyBold,
     fontSize: 20,
   },
 });

@@ -8,4 +8,5 @@ export const colors = {
 
 export const regFont = {
   fontFamily: "Quicksand",
+  fontFamilyBold: "QuicksandBold",
 };

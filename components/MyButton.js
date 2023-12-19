@@ -24,5 +24,5 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.rose,
   },
-  buttonText: { color: colors.tan, fontFamily: regFont.fontFamily },
+  buttonText: { color: colors.tan, fontFamily: regFont.fontFamilyBold },
 });
