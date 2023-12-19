@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import React from "react";
 import DescriptionForm from "./DescriptionForm";
 import BottomForm from "./BottomForm";
@@ -13,7 +13,6 @@ const BottomFormWrappers = ({
   setCoordinates,
   setZoom,
   selectedId,
-  listOfAddresses,
   setSelectedId,
 }) => {
   return (
@@ -22,7 +21,6 @@ const BottomFormWrappers = ({
         <BottomForm
           selectedId={selectedId}
           getAllAddresses={getAllAddresses}
-          listOfAddresses={listOfAddresses}
           setSelectedId={setSelectedId}
         />
       ) : (
@@ -43,7 +41,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     padding: 10,
     width: wp("100%"),
-    // top: hp("4%"),
     bottom: 15,
     right: wp("0%"),
     display: "flex",

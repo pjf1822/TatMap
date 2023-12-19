@@ -1,16 +1,9 @@
 import { Formik } from "formik";
 import React, { useRef } from "react";
-import { View, TextInput, StyleSheet } from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { View, asyncStorage } from "react-native";
 import AddressSearchForm from "./AddressSearchForm";
-import { createAddress } from "../api";
-import { showToast } from "../helpers";
-import Toast from "react-native-root-toast";
+import { handleSubmit } from "../helpers";
 import MyButton from "./MyButton";
-import { colors } from "../theme";
 import MyTextInput from "./MyTextInput";
 
 const DescriptionForm = ({ getAllAddresses, setCoordinates, setZoom }) => {
@@ -23,48 +16,16 @@ const DescriptionForm = ({ getAllAddresses, setCoordinates, setZoom }) => {
         link: "",
         newCoords: [],
       }}
-      onSubmit={async (values, actions) => {
-        const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-
-        if (!values.description || !values.link || !values.newCoords.length) {
-          showToast(
-            "Please fill out all of the fields",
-            false,
-            Toast.positions.TOP
-          );
-          return;
-        }
-        if (values.link && !urlRegex.test(values.link)) {
-          showToast("Link needs to be a URL", false, Toast.positions.TOP);
-          return;
-        }
-
-        try {
-          await createAddress({
-            description: values?.description,
-            link: values?.link,
-            coordinates: {
-              theLng: String(values?.newCoords[0]),
-              theLat: String(values?.newCoords[1]),
-            },
-          });
-          getAllAddresses();
-          autocompleteRef.current?.setAddressText("");
-          actions.resetForm({
-            values: {
-              description: "",
-              link: "",
-              newCoords: [],
-            },
-          });
-          setCoordinates(null);
-          showToast("Shop added!", true, Toast.positions.TOP);
-        } catch (error) {
-          showToast("Something went wrong!", false, Toast.positions.TOP);
-
-          console.error("Error creating address:", error);
-        }
-      }}
+      onSubmit={(values, actions) =>
+        handleSubmit(
+          values,
+          actions,
+          getAllAddresses,
+          autocompleteRef,
+          setCoordinates,
+          setZoom
+        )
+      }
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
         <View>
