@@ -21,7 +21,8 @@ export const handleSubmit = async (
   actions,
   getAllAddresses,
   autocompleteRef,
-  setCoordinates
+  setCoordinates,
+  setDeviceAddressIds
 ) => {
   const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 
@@ -44,7 +45,7 @@ export const handleSubmit = async (
       },
     });
 
-    getAllAddresses();
+    getAllAddresses(setDeviceAddressIds);
     autocompleteRef.current?.setAddressText("");
     actions.resetForm({
       values: {

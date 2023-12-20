@@ -5,9 +5,11 @@ import AddressSearchForm from "./AddressSearchForm";
 import { handleSubmit } from "../helpers";
 import MyButton from "./MyButton";
 import MyTextInput from "./MyTextInput";
+import { useDeviceAddresses } from "../AddressesContext";
 
 const DescriptionForm = ({ getAllAddresses, setCoordinates, setZoom }) => {
   const autocompleteRef = useRef(null);
+  const { setDeviceAddressIds } = useDeviceAddresses();
 
   return (
     <Formik
@@ -23,7 +25,8 @@ const DescriptionForm = ({ getAllAddresses, setCoordinates, setZoom }) => {
           getAllAddresses,
           autocompleteRef,
           setCoordinates,
-          setZoom
+          setZoom,
+          setDeviceAddressIds
         )
       }
     >

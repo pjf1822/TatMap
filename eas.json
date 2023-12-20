@@ -6,10 +6,10 @@
     "development-simulator": {
       "distribution": "internal",
       "releaseChannel": "development",
-      "developmentClient": true,
-      "ios": {
-        "simulator": true
-      }
+      "developmentClient": true
+      // "ios": {
+      //   "simulator": true
+      // }
       
     },
 

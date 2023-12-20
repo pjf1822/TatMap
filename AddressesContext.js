@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const DeviceAddressesContext = createContext();
 // import { MMKV } from "react-native-mmkv";
 
@@ -39,11 +39,12 @@ export const DeviceAddressesProvider = ({ children }) => {
   const addDeviceAddressId = async (id) => {
     try {
       // Update deviceAddressIds and store in AsyncStorage
+      console.log("where are we step 1 ");
       setDeviceAddressIds((prevIds) => [...prevIds, id]);
-      // await AsyncStorage.setItem(
-      //   "deviceAddressIds",
-      //   JSON.stringify(deviceAddressIds)
-      // );
+      await AsyncStorage.setItem(
+        "deviceAddressIds",
+        JSON.stringify(deviceAddressIds)
+      );
     } catch (error) {
       console.error("Error saving deviceAddressIds to AsyncStorage:", error);
     }
