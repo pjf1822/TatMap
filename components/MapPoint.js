@@ -17,7 +17,7 @@ const MapPoint = ({ address, setSelectedId }) => {
       title={"hey"}
       snippet={"hey"}
       onSelected={() => onAnnotationSelected(address._id)}
-      onDeselected={() => console.log("deselected")}
+      onDeselected={() => setSelectedId("")}
     >
       <Image
         source={require("../assets/TatMachine.png")}
