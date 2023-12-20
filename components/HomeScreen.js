@@ -54,7 +54,7 @@ const HomeScreen = () => {
           onLongPress={handleLongPress}
           onPress={() => setSelectedId("")}
         >
-          {deviceAddressIds.map((address) => (
+          {deviceAddressIds?.map((address) => (
             <MapPoint
               address={address}
               key={address?._id}

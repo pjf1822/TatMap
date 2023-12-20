@@ -9,7 +9,7 @@ import { useDeviceAddresses } from "../AddressesContext";
 
 const DescriptionForm = ({ getAllAddresses, setCoordinates, setZoom }) => {
   const autocompleteRef = useRef(null);
-  const { setDeviceAddressIds } = useDeviceAddresses();
+  const { deviceAddressIds, setDeviceAddressIds } = useDeviceAddresses();
 
   return (
     <Formik
@@ -26,7 +26,8 @@ const DescriptionForm = ({ getAllAddresses, setCoordinates, setZoom }) => {
           autocompleteRef,
           setCoordinates,
           setZoom,
-          setDeviceAddressIds
+          setDeviceAddressIds,
+          deviceAddressIds
         )
       }
     >

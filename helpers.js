@@ -22,7 +22,8 @@ export const handleSubmit = async (
   getAllAddresses,
   autocompleteRef,
   setCoordinates,
-  setDeviceAddressIds
+  setDeviceAddressIds,
+  deviceAddressIds
 ) => {
   const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 
@@ -44,8 +45,8 @@ export const handleSubmit = async (
         theLat: String(values?.newCoords[1]),
       },
     });
+    await getAllAddresses(setDeviceAddressIds);
 
-    getAllAddresses(setDeviceAddressIds);
     autocompleteRef.current?.setAddressText("");
     actions.resetForm({
       values: {
@@ -97,9 +98,8 @@ export const deleteShop = async (
 export const getAllAddresses = async (setDeviceAddressIds) => {
   try {
     const data = await fetchAddresses();
-    Mapbox.setTelemetryEnabled(false);
-    // setListOfAddresses(data);
     setDeviceAddressIds(data);
+    Mapbox.setTelemetryEnabled(false);
   } catch (error) {
     showToast("Check your network please", false, Toast.positions.TOP);
     console.error("An error occurred while fetching the transactions:", error);
