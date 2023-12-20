@@ -22,8 +22,8 @@ export const handleSubmit = async (
   getAllAddresses,
   autocompleteRef,
   setCoordinates,
-  setDeviceAddressIds,
-  deviceAddressIds
+
+  setListOfAddresses
 ) => {
   const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 
@@ -45,7 +45,7 @@ export const handleSubmit = async (
         theLat: String(values?.newCoords[1]),
       },
     });
-    await getAllAddresses(setDeviceAddressIds);
+    getAllAddresses(setListOfAddresses);
 
     autocompleteRef.current?.setAddressText("");
     actions.resetForm({
@@ -83,22 +83,22 @@ export const deleteShop = async (
   getAllAddresses,
   setSelectedId,
   selectedId,
-  setDeviceAddressIds
+  setListOfAddresses
 ) => {
   const response = await deleteAddress(selectedId);
   if (response.message === "Address deleted successfully!") {
     showToast("Deleted Shop!", true, Toast.positions.TOP);
-    getAllAddresses(setDeviceAddressIds);
+    getAllAddresses(setListOfAddresses);
     setSelectedId("");
   } else {
     showToast("Something went wrong", false, Toast.positions.TOP);
   }
 };
 
-export const getAllAddresses = async (setDeviceAddressIds) => {
+export const getAllAddresses = async (setListOfAddresses) => {
   try {
     const data = await fetchAddresses();
-    setDeviceAddressIds(data);
+    setListOfAddresses(data);
     Mapbox.setTelemetryEnabled(false);
   } catch (error) {
     showToast("Check your network please", false, Toast.positions.TOP);

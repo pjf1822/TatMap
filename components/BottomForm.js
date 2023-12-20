@@ -5,14 +5,20 @@ import MyButton from "./MyButton";
 import { colors, regFont } from "../theme";
 import { useDeviceAddresses } from "../AddressesContext";
 
-const BottomForm = ({ selectedId, getAllAddresses, setSelectedId }) => {
+const BottomForm = ({
+  selectedId,
+  getAllAddresses,
+  setSelectedId,
+  setListOfAddresses,
+  listOfAddresses,
+}) => {
   const [currentShop, setCurrentShop] = useState({});
   const { deviceAddressIds, setDeviceAddressIds } = useDeviceAddresses();
 
   useEffect(() => {
-    const shop = deviceAddressIds.find((shop) => shop._id === selectedId);
+    const shop = listOfAddresses.find((shop) => shop._id === selectedId);
     setCurrentShop(shop || {});
-  }, [selectedId, deviceAddressIds]);
+  }, [selectedId, listOfAddresses]);
 
   return (
     <View>
@@ -28,7 +34,7 @@ const BottomForm = ({ selectedId, getAllAddresses, setSelectedId }) => {
               getAllAddresses,
               setSelectedId,
               selectedId,
-              setDeviceAddressIds
+              setListOfAddresses
             )
           }
           text={"Delete Shop"}

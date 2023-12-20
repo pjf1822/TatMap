@@ -7,7 +7,13 @@ import MyButton from "./MyButton";
 import MyTextInput from "./MyTextInput";
 import { useDeviceAddresses } from "../AddressesContext";
 
-const DescriptionForm = ({ getAllAddresses, setCoordinates, setZoom }) => {
+const DescriptionForm = ({
+  getAllAddresses,
+  setCoordinates,
+  setZoom,
+  setListOfAddresses,
+  listOfAddresses,
+}) => {
   const autocompleteRef = useRef(null);
   const { deviceAddressIds, setDeviceAddressIds } = useDeviceAddresses();
 
@@ -26,8 +32,8 @@ const DescriptionForm = ({ getAllAddresses, setCoordinates, setZoom }) => {
           autocompleteRef,
           setCoordinates,
           setZoom,
-          setDeviceAddressIds,
-          deviceAddressIds
+          setListOfAddresses,
+          listOfAddresses
         )
       }
     >

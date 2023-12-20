@@ -14,6 +14,8 @@ const BottomFormWrappers = ({
   setZoom,
   selectedId,
   setSelectedId,
+  setListOfAddresses,
+  listOfAddresses,
 }) => {
   const slideAnim = useRef(new Animated.Value(0)).current;
   const slideAnim2 = useRef(new Animated.Value(0)).current;
@@ -70,6 +72,8 @@ const BottomFormWrappers = ({
           selectedId={selectedId}
           getAllAddresses={getAllAddresses}
           setSelectedId={setSelectedId}
+          setListOfAddresses={setListOfAddresses}
+          listOfAddresses={listOfAddresses}
         />
       </Animated.View>
 
@@ -92,6 +96,8 @@ const BottomFormWrappers = ({
           getAllAddresses={getAllAddresses}
           setCoordinates={setCoordinates}
           setZoom={setZoom}
+          setListOfAddresses={setListOfAddresses}
+          listOfAddresses={listOfAddresses}
         />
       </Animated.View>
     </View>

@@ -28,6 +28,7 @@ export default function App() {
 
     prepare();
   }, []);
+
   return (
     <DeviceAddressesProvider>
       <KeyboardAvoidingView

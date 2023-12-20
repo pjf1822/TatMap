@@ -16,7 +16,7 @@ export const DeviceAddressesProvider = ({ children }) => {
   const [deviceAddressIds, setDeviceAddressIds] = useState([]);
 
   useEffect(() => {
-    console.log("deviceAddressIds changed context", deviceAddressIds.length);
+    // console.log("deviceAddressIds changed context", deviceAddressIds.length);
     // You can add any additional logic you need here
   }, [deviceAddressIds]);
   return (
