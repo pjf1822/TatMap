@@ -9,7 +9,8 @@ import {
 } from "react-native-responsive-screen";
 import MapPoint from "./MapPoint";
 import TemporaryPoint from "./TemporaryPoint";
-import { getAllAddresses, handleLongPress, handleMapIdle } from "../helpers";
+import { handleLongPress, handleMapIdle } from "../helpers";
+import { fetchAddresses } from "../api";
 
 Mapbox.setAccessToken(
   "pk.eyJ1IjoicGpmMTgyMiIsImEiOiJjbGZybHJsMXMwMmd3M3BwMmFiZXlvZjczIn0.68xXIxxj_-iONU42ihPWZA"
@@ -18,15 +19,27 @@ Mapbox.setAccessToken(
 const HomeScreen = () => {
   const { deviceAddressIds, setDeviceAddressIds } = useDeviceAddresses();
   const [selectedId, setSelectedId] = useState("");
+  const [listOfAddresses, setListOfAddresses] = useState([]);
 
   // two states for when you select an address in the google address text input
   const [coordinates, setCoordinates] = useState(null);
   const [zoom, setZoom] = useState(4);
   const mapRef = useRef(null);
 
+  const getAllAddresses = async () => {
+    try {
+      const data = await fetchAddresses();
+      setListOfAddresses(data);
+    } catch (error) {
+      console.error(
+        "An error occurred while fetching the transactions:",
+        error
+      );
+    }
+  };
   // EFFECT TO RUN THE INITAL API CALL
   useEffect(() => {
-    getAllAddresses(setDeviceAddressIds);
+    getAllAddresses(setListOfAddresses);
   }, []);
 
   return (
@@ -38,6 +51,8 @@ const HomeScreen = () => {
         setCoordinates={setCoordinates}
         setZoom={setZoom}
         selectedId={selectedId}
+        listOfAddresses={listOfAddresses}
+        setListOfAddresses={setListOfAddresses}
         setSelectedId={setSelectedId}
       />
 
@@ -54,7 +69,7 @@ const HomeScreen = () => {
           onLongPress={handleLongPress}
           onPress={() => setSelectedId("")}
         >
-          {deviceAddressIds.map((address) => (
+          {listOfAddresses?.map((address) => (
             <MapPoint
               address={address}
               key={address?._id}

@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
-import { colors } from "../theme";
+import { colors, regFont } from "../theme";
 
 const MyButton = ({ onPress, text }) => {
   return (
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 7,
     borderWidth: 2,
-    borderColor: colors.tan,
+    borderColor: colors.rose,
   },
-  buttonText: { color: colors.tan },
+  buttonText: { color: colors.tan, fontFamily: regFont.fontFamilyBold },
 });

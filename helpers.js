@@ -1,5 +1,5 @@
 import Toast from "react-native-root-toast";
-import { colors } from "./theme";
+import { colors, regFont } from "./theme";
 import { createAddress, deleteAddress, fetchAddresses } from "./api";
 import { Linking } from "react-native";
 import Mapbox from "@rnmapbox/maps";
@@ -12,6 +12,7 @@ export const showToast = (toastMessage, success, position) => {
     backgroundColor: success === true ? colors.blue : colors.licorice,
     textColor: colors.tan,
     opacity: 1,
+    fontFamily: regFont.fontFamilyBold,
   });
 };
 
@@ -20,7 +21,9 @@ export const handleSubmit = async (
   actions,
   getAllAddresses,
   autocompleteRef,
-  setCoordinates
+  setCoordinates,
+
+  setListOfAddresses
 ) => {
   const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 
@@ -42,8 +45,8 @@ export const handleSubmit = async (
         theLat: String(values?.newCoords[1]),
       },
     });
+    getAllAddresses(setListOfAddresses);
 
-    getAllAddresses();
     autocompleteRef.current?.setAddressText("");
     actions.resetForm({
       values: {
@@ -79,25 +82,26 @@ export const openLink = (currentShop) => {
 export const deleteShop = async (
   getAllAddresses,
   setSelectedId,
-  selectedId
+  selectedId,
+  setListOfAddresses
 ) => {
   const response = await deleteAddress(selectedId);
   if (response.message === "Address deleted successfully!") {
     showToast("Deleted Shop!", true, Toast.positions.TOP);
-    getAllAddresses();
+    getAllAddresses(setListOfAddresses);
     setSelectedId("");
   } else {
     showToast("Something went wrong", false, Toast.positions.TOP);
   }
 };
 
-export const getAllAddresses = async (setDeviceAddressIds) => {
+export const getAllAddresses = async (setListOfAddresses) => {
   try {
     const data = await fetchAddresses();
+    setListOfAddresses(data);
     Mapbox.setTelemetryEnabled(false);
-    // setListOfAddresses(data);
-    setDeviceAddressIds(data);
   } catch (error) {
+    showToast("Check your network please", false, Toast.positions.TOP);
     console.error("An error occurred while fetching the transactions:", error);
   }
 };

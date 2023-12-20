@@ -5,10 +5,6 @@ import { PointAnnotation } from "@rnmapbox/maps";
 const MapPoint = ({ address, setSelectedId }) => {
   const markerRef = useRef(null);
 
-  const onAnnotationSelected = (id) => {
-    setSelectedId(id);
-  };
-
   return (
     <PointAnnotation
       ref={markerRef}
@@ -16,8 +12,8 @@ const MapPoint = ({ address, setSelectedId }) => {
       coordinate={[address?.coordinates[0], address?.coordinates[1]]}
       title={"hey"}
       snippet={"hey"}
-      onSelected={() => onAnnotationSelected(address._id)}
-      onDeselected={() => console.log("deselected")}
+      onSelected={() => setSelectedId(address._id)}
+      onDeselected={() => setSelectedId("")}
     >
       <Image
         source={require("../assets/TatMachine.png")}

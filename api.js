@@ -11,7 +11,7 @@ const fetchAddresses = async () => {
 
     return await res.json();
   } catch (error) {
-    console.error("An error occurred while fetching the transactions:", error);
+    console.error("An error occurred while fetching the transactionss:", error);
     throw error; // Re-throw the error so it can be handled by the calling code
   }
 };
