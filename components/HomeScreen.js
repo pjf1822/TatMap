@@ -9,7 +9,7 @@ import {
 } from "react-native-responsive-screen";
 import MapPoint from "./MapPoint";
 import TemporaryPoint from "./TemporaryPoint";
-import { handleLongPress, handleMapIdle } from "../helpers";
+import { getAllAddresses, handleLongPress, handleMapIdle } from "../helpers";
 import { fetchAddresses } from "../api";
 
 Mapbox.setAccessToken(
@@ -39,7 +39,7 @@ const HomeScreen = () => {
   };
   // EFFECT TO RUN THE INITAL API CALL
   useEffect(() => {
-    getAllAddresses(setListOfAddresses);
+    getAllAddresses();
   }, []);
 
   return (

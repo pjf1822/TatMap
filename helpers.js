@@ -95,17 +95,6 @@ export const deleteShop = async (
   }
 };
 
-export const getAllAddresses = async (setListOfAddresses) => {
-  try {
-    const data = await fetchAddresses();
-    setListOfAddresses(data);
-    Mapbox.setTelemetryEnabled(false);
-  } catch (error) {
-    showToast("Check your network please", false, Toast.positions.TOP);
-    console.error("An error occurred while fetching the transactions:", error);
-  }
-};
-
 export const handleMapIdle = async (mapRef) => {
   if (mapRef.current) {
     const centerPointInView = await mapRef.current.getPointInView([0.5, 0.5]);
