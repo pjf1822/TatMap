@@ -22,7 +22,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 7,
     borderWidth: 2,
-    borderColor: colors.rose,
+    borderColor: colors.blue,
   },
-  buttonText: { color: colors.tan, fontFamily: regFont.fontFamilyBold },
+  buttonText: {
+    color: colors.tan,
+    fontFamily: regFont.fontFamilyBold,
+    fontSize: 17,
+  },
 });

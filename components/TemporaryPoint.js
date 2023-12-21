@@ -17,7 +17,7 @@ const TemporaryPoint = ({ coordinates }) => {
         >
           <Image
             style={{ height: 60, aspectRatio: 1 }}
-            source={require("../assets/location.png")}
+            source={require("../assets/icon2.png")}
             onLoad={() => markerRef?.current?.refresh()}
           />
         </PointAnnotation>

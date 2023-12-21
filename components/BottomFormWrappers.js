@@ -1,4 +1,4 @@
-import { View, StyleSheet, Animated, Easing } from "react-native";
+import { View, StyleSheet, Animated, Easing, Platform } from "react-native";
 import React, { useEffect, useRef } from "react";
 import DescriptionForm from "./DescriptionForm";
 import BottomForm from "./BottomForm";
@@ -28,8 +28,16 @@ const BottomFormWrappers = ({
       bottom: 1,
       right: wp("0%"),
       zIndex: 99,
+      borderTopWidth: 2,
+      borderTopColor: colors.licorice,
       backgroundColor: colors.tan,
-      transform: selectedId === "" ? "translateY(100px)" : "translateY(150px)",
+
+      transform:
+        selectedId === ""
+          ? Platform.isPad
+            ? "translateY(60px)"
+            : "translateY(100px)"
+          : "translateY(150px)",
     },
     singleForm: {},
   });

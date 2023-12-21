@@ -12,10 +12,10 @@
       ]
     ],
     "orientation": "portrait",
-    "icon": "./assets/TatMap.png",
+    "image": "./assets/phoneIcon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/phoneIcon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

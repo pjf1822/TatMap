@@ -1,8 +1,7 @@
 import Toast from "react-native-root-toast";
 import { colors, regFont } from "./theme";
-import { createAddress, deleteAddress, fetchAddresses } from "./api";
+import { createAddress, deleteAddress } from "./api";
 import { Keyboard, Linking } from "react-native";
-import Mapbox from "@rnmapbox/maps";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -14,6 +13,9 @@ export const showToast = (toastMessage, success, position) => {
     textColor: colors.tan,
     opacity: 1,
     fontFamily: regFont.fontFamilyBold,
+    fontSize: 23,
+    shadow: true,
+    shadowColor: colors.tan,
   });
 };
 
