@@ -4,6 +4,7 @@ import { createAddress, deleteAddress, fetchAddresses } from "./api";
 import { Linking } from "react-native";
 import Mapbox from "@rnmapbox/maps";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const showToast = (toastMessage, success, position) => {
   let toast = Toast.show(toastMessage, {
@@ -26,7 +27,7 @@ export const handleSubmit = async (
   setListOfAddresses
 ) => {
   const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-
+  // input error handling
   if (!values.description || !values.link || !values.newCoords.length) {
     showToast("Please fill out all of the fields", false, Toast.positions.TOP);
     return;
@@ -45,8 +46,17 @@ export const handleSubmit = async (
         theLat: String(values?.newCoords[1]),
       },
     });
-    getAllAddresses(setListOfAddresses);
+    // async storage piece
+    const deviceAddresses = await AsyncStorage.getItem("device_addresses");
+    const parsedAddresses = JSON.parse(deviceAddresses) || [];
+    parsedAddresses.push(response?.address?._id);
 
+    await AsyncStorage.setItem(
+      "device_addresses",
+      JSON.stringify(parsedAddresses)
+    );
+    getAllAddresses(setListOfAddresses);
+    // reset forms
     autocompleteRef.current?.setAddressText("");
     actions.resetForm({
       values: {

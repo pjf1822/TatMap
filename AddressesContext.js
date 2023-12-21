@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 const DeviceAddressesContext = createContext();
 
 export const useDeviceAddresses = () => {
@@ -15,10 +14,6 @@ export const useDeviceAddresses = () => {
 export const DeviceAddressesProvider = ({ children }) => {
   const [deviceAddressIds, setDeviceAddressIds] = useState([]);
 
-  useEffect(() => {
-    // console.log("deviceAddressIds changed context", deviceAddressIds.length);
-    // You can add any additional logic you need here
-  }, [deviceAddressIds]);
   return (
     <DeviceAddressesContext.Provider
       value={{ deviceAddressIds, setDeviceAddressIds }}
