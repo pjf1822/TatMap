@@ -1,5 +1,5 @@
-const url = "https://server-mapbox.onrender.com";
-// const url = "http://localhost:8000";
+// const url = "https://server-mapbox.onrender.com";
+const url = "http://localhost:8000";
 
 const fetchAddresses = async () => {
   try {
@@ -16,6 +16,26 @@ const fetchAddresses = async () => {
   }
 };
 
+const fetchAddressesByDeviceIds = async (_ids) => {
+  try {
+    const res = await fetch(`${url}/api/addresses/getallbyids`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ _ids }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch addresses by IDss");
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("An error occurred while fetching addresses by IDs:", error);
+    throw error;
+  }
+};
 const createAddress = async (payload) => {
   try {
     const res = await fetch(`${url}/api/addresses/create`, {
@@ -56,4 +76,9 @@ const deleteAddress = async (id) => {
   }
 };
 
-export { fetchAddresses, createAddress, deleteAddress };
+export {
+  fetchAddresses,
+  fetchAddressesByDeviceIds,
+  createAddress,
+  deleteAddress,
+};
