@@ -97,6 +97,15 @@ export const deleteShop = async (
 ) => {
   const response = await deleteAddress(selectedId);
   if (response.message === "Address deleted successfully!") {
+    const deviceAddresses = await AsyncStorage.getItem("device_addresses");
+    const parsedAddresses = JSON.parse(deviceAddresses) || [];
+
+    const updatedAddresses = parsedAddresses.filter((id) => id !== selectedId);
+
+    await AsyncStorage.setItem(
+      "device_addresses",
+      JSON.stringify(updatedAddresses)
+    );
     showToast("Deleted Shop!", true, Toast.positions.TOP);
     getAllAddresses(setListOfAddresses);
     setSelectedId("");

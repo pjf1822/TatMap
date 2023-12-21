@@ -1,7 +1,6 @@
 import { View, Image, StyleSheet } from "react-native";
 import React, { useEffect, useState, useRef } from "react";
 import BottomFormWrappers from "./BottomFormWrappers";
-import { useDeviceAddresses } from "../AddressesContext";
 import Mapbox from "@rnmapbox/maps";
 import {
   widthPercentageToDP as wp,
@@ -9,7 +8,7 @@ import {
 } from "react-native-responsive-screen";
 import MapPoint from "./MapPoint";
 import TemporaryPoint from "./TemporaryPoint";
-import { getAllAddresses, handleLongPress, handleMapIdle } from "../helpers";
+import { handleLongPress, handleMapIdle } from "../helpers";
 import { fetchAddresses } from "../api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -18,7 +17,6 @@ Mapbox.setAccessToken(
 );
 
 const HomeScreen = () => {
-  const { deviceAddressIds, setDeviceAddressIds } = useDeviceAddresses();
   const [listOfAddresses, setListOfAddresses] = useState([]);
   const [selectedId, setSelectedId] = useState("");
 
@@ -31,6 +29,7 @@ const HomeScreen = () => {
     try {
       const storedData = await AsyncStorage.getItem("device_addresses");
       const parsedData = JSON.parse(storedData);
+      console.log(parsedData);
       return parsedData || [];
     } catch (error) {
       console.error("Error fetching data from AsyncStorage:", error);

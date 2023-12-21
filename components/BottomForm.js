@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { deleteShop, openLink } from "../helpers";
 import MyButton from "./MyButton";
 import { colors, regFont } from "../theme";
-import { useDeviceAddresses } from "../AddressesContext";
 
 const BottomForm = ({
   selectedId,
@@ -13,7 +12,6 @@ const BottomForm = ({
   listOfAddresses,
 }) => {
   const [currentShop, setCurrentShop] = useState({});
-  const { deviceAddressIds, setDeviceAddressIds } = useDeviceAddresses();
 
   useEffect(() => {
     const shop = listOfAddresses.find((shop) => shop._id === selectedId);

@@ -1,11 +1,10 @@
 import { Formik } from "formik";
 import React, { useRef } from "react";
-import { View, asyncStorage } from "react-native";
+import { View } from "react-native";
 import AddressSearchForm from "./AddressSearchForm";
 import { handleSubmit } from "../helpers";
 import MyButton from "./MyButton";
 import MyTextInput from "./MyTextInput";
-import { useDeviceAddresses } from "../AddressesContext";
 
 const DescriptionForm = ({
   getAllAddresses,
@@ -15,7 +14,6 @@ const DescriptionForm = ({
   listOfAddresses,
 }) => {
   const autocompleteRef = useRef(null);
-  const { deviceAddressIds, setDeviceAddressIds } = useDeviceAddresses();
 
   return (
     <Formik
