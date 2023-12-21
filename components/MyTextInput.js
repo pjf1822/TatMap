@@ -27,5 +27,12 @@ const styles = StyleSheet.create({
     marginBottom: 2,
     color: colors.licorice,
     fontFamily: regFont.fontFamilyBold,
+    shadowColor: colors.licorice,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
 });

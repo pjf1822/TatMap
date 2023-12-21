@@ -13,6 +13,7 @@ import { fetchAddressesByDeviceIds } from "../api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { MAPBOX_ACCESS_TOKEN } from "@env";
+import { colors } from "../theme";
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 const HomeScreen = () => {
@@ -69,7 +70,9 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.page}>
-      <Image source={require("../assets/TatMap.png")} style={styles.logo} />
+      <View style={styles.logoWrapper}>
+        <Image source={require("../assets/icon2.png")} style={styles.logo} />
+      </View>
 
       <BottomFormWrappers
         getAllAddresses={getAllAddresses}
@@ -128,12 +131,29 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
-  logo: {
-    height: hp("13%"),
-    width: wp("13%"),
+  logoWrapper: {
+    height: hp("12%"),
+    width: wp("29%"),
     position: "absolute",
-    top: hp("10%"),
-    left: wp("10%"),
+    top: hp("7%"),
+    left: wp("7%"),
     zIndex: 99,
+    borderRadius: 50,
+    // borderWidth: 3,
+    borderColor: colors.licorice,
+    overflow: "hidden",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+    backgroundColor: colors.gray,
+  },
+  logo: {
+    height: "100%",
+    width: "100%",
+    objectFit: "contain",
+    transform: [
+      // { scale: 1.28 }, // Adjust the scale factor for zooming
+    ],
   },
 });

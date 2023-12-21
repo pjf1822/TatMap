@@ -12,10 +12,10 @@
       ]
     ],
     "orientation": "portrait",
-    "icon": "./assets/TatMap.png",
+    "image": "./assets/phoneiconImage.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/phoneiconImage.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -25,7 +25,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.pjf1822.mapbox-native",
-      "buildNumber": "9",
+      "buildNumber": "11",
       "infoPlist": {
         "NSLocationAlwaysAndWhenInUseUsageDescription": "I am not using any user location data nor do i have access to it",
         "NSLocationWhenInUseUsageDescription":"I am not using any user location data nor do i have access to it"

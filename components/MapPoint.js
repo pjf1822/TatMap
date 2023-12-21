@@ -16,7 +16,7 @@ const MapPoint = ({ address, setSelectedId }) => {
       onDeselected={() => setSelectedId("")}
     >
       <Image
-        source={require("../assets/TatMachine.png")}
+        source={require("../assets/icon1.png")}
         onLoad={() => markerRef?.current?.refresh()}
         style={{ width: 60, height: 60 }}
       />
