@@ -1,7 +1,6 @@
 import { StyleSheet, KeyboardAvoidingView } from "react-native";
 import Mapbox from "@rnmapbox/maps";
 import HomeScreen from "./components/HomeScreen";
-import { DeviceAddressesProvider } from "./AddressesContext";
 import { useEffect, useState } from "react";
 import * as Font from "expo-font";
 
@@ -30,14 +29,12 @@ export default function App() {
   }, []);
 
   return (
-    <DeviceAddressesProvider>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
-      >
-        <HomeScreen />
-      </KeyboardAvoidingView>
-    </DeviceAddressesProvider>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <HomeScreen />
+    </KeyboardAvoidingView>
   );
 }
 

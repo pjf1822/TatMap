@@ -1,7 +1,6 @@
 import { View, Image, StyleSheet } from "react-native";
 import React, { useEffect, useState, useRef } from "react";
 import BottomFormWrappers from "./BottomFormWrappers";
-import { useDeviceAddresses } from "../AddressesContext";
 import Mapbox from "@rnmapbox/maps";
 import {
   widthPercentageToDP as wp,
@@ -11,25 +10,50 @@ import MapPoint from "./MapPoint";
 import TemporaryPoint from "./TemporaryPoint";
 import { handleLongPress, handleMapIdle } from "../helpers";
 import { fetchAddresses } from "../api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 Mapbox.setAccessToken(
   "pk.eyJ1IjoicGpmMTgyMiIsImEiOiJjbGZybHJsMXMwMmd3M3BwMmFiZXlvZjczIn0.68xXIxxj_-iONU42ihPWZA"
 );
 
 const HomeScreen = () => {
-  const { deviceAddressIds, setDeviceAddressIds } = useDeviceAddresses();
-  const [selectedId, setSelectedId] = useState("");
   const [listOfAddresses, setListOfAddresses] = useState([]);
+  const [selectedId, setSelectedId] = useState("");
 
   // two states for when you select an address in the google address text input
   const [coordinates, setCoordinates] = useState(null);
   const [zoom, setZoom] = useState(4);
   const mapRef = useRef(null);
 
+  const fetchStoredData = async () => {
+    try {
+      const storedData = await AsyncStorage.getItem("device_addresses");
+      const parsedData = JSON.parse(storedData);
+      console.log(parsedData);
+      return parsedData || [];
+    } catch (error) {
+      console.error("Error fetching data from AsyncStorage:", error);
+    }
+  };
+  const clearAsyncStorage = async () => {
+    try {
+      await AsyncStorage.clear();
+      console.log("AsyncStorage cleared successfully.");
+    } catch (error) {
+      console.error("Error clearing AsyncStorage:", error);
+    }
+  };
+
   const getAllAddresses = async () => {
     try {
       const data = await fetchAddresses();
-      setListOfAddresses(data);
+      const storedIds = await fetchStoredData();
+
+      const filteredData = data?.filter((item) =>
+        storedIds?.includes(item._id)
+      );
+
+      setListOfAddresses(filteredData);
     } catch (error) {
       console.error(
         "An error occurred while fetching the transactions:",
@@ -39,7 +63,8 @@ const HomeScreen = () => {
   };
   // EFFECT TO RUN THE INITAL API CALL
   useEffect(() => {
-    getAllAddresses(setListOfAddresses);
+    // clearAsyncStorage();
+    getAllAddresses();
   }, []);
 
   return (
