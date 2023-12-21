@@ -12,10 +12,10 @@
       ]
     ],
     "orientation": "portrait",
-    "image": "./assets/phoneiconImage.png",
+    "image": "./assets/icon-1024.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/phoneiconImage.png",
+      "image": "./assets/icon-1024.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -26,7 +26,14 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.pjf1822.mapbox-native",
       "buildNumber": "11",
+      "icon": "./assets/icon-1024.png",  
+        "icons": {
+          "60": "./assets/icon-60.png",   
+          "76": "./assets/icon-76.png",  
+          "152": "./assets/icon-152.png"  
+        },
       "infoPlist": {
+        "CFBundleIconName": "AppIcon",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "I am not using any user location data nor do i have access to it",
         "NSLocationWhenInUseUsageDescription":"I am not using any user location data nor do i have access to it"
       }
