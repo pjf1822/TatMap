@@ -94,6 +94,7 @@ const HomeScreen = () => {
           onMapIdle={() => handleMapIdle(mapRef)}
           onLongPress={handleLongPress}
           onPress={() => setSelectedId("")}
+          showsUserLocation={false}
         >
           {listOfAddresses?.map((address) => (
             <MapPoint

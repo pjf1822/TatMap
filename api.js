@@ -1,5 +1,5 @@
-// const url = "https://server-mapbox.onrender.com";
-const url = "http://localhost:8000";
+const url = "https://server-mapbox.onrender.com";
+// const url = "http://localhost:8000";
 
 const fetchAddresses = async () => {
   try {

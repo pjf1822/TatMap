@@ -30,7 +30,8 @@ const AddressSearchForm = ({
             color: "#1faadb",
           },
           poweredContainer: {
-            display: "none",
+            paddingBottom: 7,
+            paddingTop: 7,
           },
 
           textInput: {
@@ -58,6 +59,7 @@ const AddressSearchForm = ({
             handleChange
           );
         }}
+        currentLocation={false}
         onFail={(error) => {
           console.error("Google Places Autocomplete failed:", error);
         }}
