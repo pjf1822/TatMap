@@ -7,23 +7,25 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "dev": "npx expo start --dev-client "
+    "dev": "npx expo start --dev-client --reset-cache "
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.18.2",
     "@rnmapbox/maps": "^10.1.1",
     "axios": "^1.6.2",
+    "dotenv": "^16.3.1",
     "expo": "~49.0.15",
     "expo-dev-client": "^2.4.12",
+    "expo-font": "~11.4.0",
     "expo-status-bar": "~1.6.0",
     "formik": "^2.4.5",
     "react": "18.2.0",
     "react-native": "0.72.6",
+    "react-native-dotenv": "^3.4.9",
     "react-native-google-places-autocomplete": "^2.5.6",
     "react-native-mmkv": "^2.11.0",
     "react-native-responsive-screen": "^1.4.2",
-    "react-native-root-toast": "^3.5.1",
-    "expo-font": "~11.4.0"
+    "react-native-root-toast": "^3.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

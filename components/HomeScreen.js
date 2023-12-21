@@ -9,12 +9,11 @@ import {
 import MapPoint from "./MapPoint";
 import TemporaryPoint from "./TemporaryPoint";
 import { handleLongPress, handleMapIdle } from "../helpers";
-import { fetchAddresses, fetchAddressesByDeviceIds } from "../api";
+import { fetchAddressesByDeviceIds } from "../api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-Mapbox.setAccessToken(
-  "pk.eyJ1IjoicGpmMTgyMiIsImEiOiJjbGZybHJsMXMwMmd3M3BwMmFiZXlvZjczIn0.68xXIxxj_-iONU42ihPWZA"
-);
+import { MAPBOX_ACCESS_TOKEN } from "@env";
+Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 const HomeScreen = () => {
   const [listOfAddresses, setListOfAddresses] = useState([]);

@@ -3,6 +3,7 @@ import React from "react";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { colors, regFont } from "../theme";
 import { forwardGeocoding } from "../helpers";
+import { GOOGLE_AUTOCORRECT_ACCESS_TOKEN } from "@env";
 
 const AddressSearchForm = ({
   handleChange,
@@ -65,7 +66,7 @@ const AddressSearchForm = ({
         }}
         suppressDefaultStyles={true}
         query={{
-          key: "AIzaSyAEg44iVbUHQP7x9Qw6r_ukiy18taLCuzE",
+          key: GOOGLE_AUTOCORRECT_ACCESS_TOKEN,
           language: "en",
         }}
         ref={autocompleteRef}
