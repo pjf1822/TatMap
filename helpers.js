@@ -1,7 +1,7 @@
 import Toast from "react-native-root-toast";
 import { colors, regFont } from "./theme";
 import { createAddress, deleteAddress, fetchAddresses } from "./api";
-import { Linking } from "react-native";
+import { Keyboard, Linking } from "react-native";
 import Mapbox from "@rnmapbox/maps";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -56,6 +56,8 @@ export const handleSubmit = async (
       JSON.stringify(parsedAddresses)
     );
     getAllAddresses(setListOfAddresses);
+    Keyboard.dismiss();
+
     // reset forms
     autocompleteRef.current?.setAddressText("");
     actions.resetForm({
@@ -66,6 +68,7 @@ export const handleSubmit = async (
       },
     });
     setCoordinates(null);
+
     showToast("Shop added!", true, Toast.positions.TOP);
   } catch (error) {
     showToast("Something went wrong!", false, Toast.positions.TOP);
