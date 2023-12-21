@@ -1,5 +1,11 @@
 <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-<string>We need your location for a better TatMap experience.</string>
+<string>I am not using any user location data nor do i have access to it</string>
 <key>NSLocationWhenInUseUsageDescription</key>
-<string>We need your location for a better TatMap experience.</string>
-MGLMapboxMetricsEnabledSettingShownInApp=YES
+<string>I am not using any user location data nor do i have access to it</string>
+<key>MGLMapboxAccessToken</key>
+<string>pk.eyJ1IjoicGpmMTgyMiIsImEiOiJjbGZybHJsMXMwMmd3M3BwMmFiZXlvZjczIn0.68xXIxxj_-iONU42ihPWZA</string>
+<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
+<false/>
+
+
+

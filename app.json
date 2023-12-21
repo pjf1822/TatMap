@@ -2,7 +2,7 @@
   "expo": {
     "name": "TatMap",
     "slug": "mapbox-nativo",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "plugins": [
       [
         "@rnmapbox/maps",
@@ -25,7 +25,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.pjf1822.mapbox-native",
-      "buildNumber": "4"
+      "buildNumber": "8",
+      "infoPlist": {
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "I am not using any user location data nor do i have access to it",
+        "NSLocationWhenInUseUsageDescription":"I am not using any user location data nor do i have access to it"
+      }
     },
     "android": {
       "adaptiveIcon": {

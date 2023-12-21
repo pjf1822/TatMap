@@ -9,7 +9,7 @@ import {
 import MapPoint from "./MapPoint";
 import TemporaryPoint from "./TemporaryPoint";
 import { handleLongPress, handleMapIdle } from "../helpers";
-import { fetchAddresses } from "../api";
+import { fetchAddresses, fetchAddressesByDeviceIds } from "../api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 Mapbox.setAccessToken(
@@ -46,14 +46,15 @@ const HomeScreen = () => {
 
   const getAllAddresses = async () => {
     try {
-      const data = await fetchAddresses();
       const storedIds = await fetchStoredData();
+      // const data = await fetchAddresses();
+      const data = await fetchAddressesByDeviceIds(storedIds);
 
-      const filteredData = data?.filter((item) =>
-        storedIds?.includes(item._id)
-      );
+      // const filteredData = data?.filter((item) =>
+      //   storedIds?.includes(item._id)
+      // );
 
-      setListOfAddresses(filteredData);
+      setListOfAddresses(data);
     } catch (error) {
       console.error(
         "An error occurred while fetching the transactions:",
@@ -93,6 +94,7 @@ const HomeScreen = () => {
           onMapIdle={() => handleMapIdle(mapRef)}
           onLongPress={handleLongPress}
           onPress={() => setSelectedId("")}
+          showsUserLocation={false}
         >
           {listOfAddresses?.map((address) => (
             <MapPoint
