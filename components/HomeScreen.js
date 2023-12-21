@@ -18,8 +18,8 @@ Mapbox.setAccessToken(
 
 const HomeScreen = () => {
   const { deviceAddressIds, setDeviceAddressIds } = useDeviceAddresses();
-  const [selectedId, setSelectedId] = useState("");
   const [listOfAddresses, setListOfAddresses] = useState([]);
+  const [selectedId, setSelectedId] = useState("");
 
   // two states for when you select an address in the google address text input
   const [coordinates, setCoordinates] = useState(null);
