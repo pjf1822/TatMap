@@ -1,4 +1,4 @@
-import { Image, StyleSheet, View } from "react-native";
+import { Image, Platform, StyleSheet, View } from "react-native";
 import React, { useRef } from "react";
 import { PointAnnotation } from "@rnmapbox/maps";
 import { colors } from "../theme";
@@ -33,7 +33,7 @@ export default TemporaryPoint;
 
 const styles = StyleSheet.create({
   logoWrapper: {
-    height: 60,
+    height: Platform.OS === "ios" && Platform.isPad ? 80 : 60,
     aspectRatio: 1,
     borderRadius: 50,
     // borderWidth: 3,

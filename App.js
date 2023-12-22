@@ -1,4 +1,4 @@
-import { StyleSheet, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 import HomeScreen from "./components/HomeScreen";
 import { useEffect, useState } from "react";
 import * as Font from "expo-font";

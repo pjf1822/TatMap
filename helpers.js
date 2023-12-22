@@ -14,8 +14,8 @@ export const showToast = (toastMessage, success, position) => {
     opacity: 1,
     fontFamily: regFont.fontFamilyBold,
     fontSize: 23,
-    shadow: true,
-    shadowColor: colors.tan,
+    // shadow: true,
+    // shadowColor: colors.tan,
   });
 };
 

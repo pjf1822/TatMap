@@ -31,11 +31,10 @@ const BottomFormWrappers = ({
       borderTopWidth: 2,
       borderTopColor: colors.licorice,
       backgroundColor: colors.tan,
-
       transform:
         selectedId === ""
-          ? Platform.isPad
-            ? "translateY(0px)"
+          ? Platform.OS === "ios" && Platform.isPad
+            ? "translateY(100px)"
             : "translateY(100px)"
           : "translateY(150px)",
     },
@@ -93,7 +92,12 @@ const BottomFormWrappers = ({
               {
                 translateY: slideAnim2.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [hp("80%"), -hp("14%")],
+                  outputRange: [
+                    hp("80%"),
+                    Platform.OS === "ios" && Platform.isPad
+                      ? -hp("10%")
+                      : -hp("14%"),
+                  ],
                 }),
               },
             ],

@@ -1,4 +1,4 @@
-import { Image, StyleSheet } from "react-native";
+import { Image, Platform, StyleSheet, View } from "react-native";
 import React, { useRef } from "react";
 import { PointAnnotation } from "@rnmapbox/maps";
 import { colors } from "../theme";
@@ -31,7 +31,7 @@ export default MapPoint;
 
 const styles = StyleSheet.create({
   logoWrapper: {
-    height: 60,
+    height: Platform.OS === "ios" && Platform.isPad ? 80 : 60,
     aspectRatio: 1,
     borderRadius: 50,
     // borderWidth: 3,
@@ -41,9 +41,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
 
     backgroundColor: colors.gray,
-    transform: [
-      { scale: 0.83 }, // Adjust the scale factor for zooming
-    ],
+    transform: [{ scale: 0.83 }],
   },
   logo: {
     height: "100%",

@@ -132,9 +132,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logoWrapper: {
-    height: hp("12%"),
+    height: Platform.OS === "ios" && Platform.isPad ? 140 : hp("12%"),
 
-    width: Platform.isIpad ? wp("12%") : wp("29%"),
+    width: Platform.OS === "ios" && Platform.isPad ? 140 : wp("29%"),
     position: "absolute",
     top: hp("7%"),
     left: wp("7%"),
