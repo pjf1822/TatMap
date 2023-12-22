@@ -1,4 +1,4 @@
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, Platform } from "react-native";
 import React, { useEffect, useState, useRef } from "react";
 import BottomFormWrappers from "./BottomFormWrappers";
 import Mapbox from "@rnmapbox/maps";
@@ -29,7 +29,7 @@ const HomeScreen = () => {
     try {
       const storedData = await AsyncStorage.getItem("device_addresses");
       const parsedData = JSON.parse(storedData);
-      console.log(parsedData);
+      // console.log(parsedData);
       return parsedData || [];
     } catch (error) {
       console.error("Error fetching data from AsyncStorage:", error);
@@ -133,7 +133,8 @@ const styles = StyleSheet.create({
   },
   logoWrapper: {
     height: hp("12%"),
-    width: wp("29%"),
+
+    width: Platform.isIpad ? wp("12%") : wp("29%"),
     position: "absolute",
     top: hp("7%"),
     left: wp("7%"),
@@ -147,13 +148,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
 
     backgroundColor: colors.gray,
+    transform: [
+      { scale: 0.83 }, // Adjust the scale factor for zooming
+    ],
   },
   logo: {
     height: "100%",
     width: "100%",
     objectFit: "contain",
-    transform: [
-      // { scale: 1.28 }, // Adjust the scale factor for zooming
-    ],
   },
 });

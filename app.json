@@ -12,7 +12,7 @@
       ]
     ],
     "orientation": "portrait",
-    "image": "./assets/icon-1024.png",
+    "image": "./assets/new-1024.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/icon-1024.png",
@@ -28,9 +28,9 @@
       "buildNumber": "11",
       "icon": "./assets/icon-1024.png",  
         "icons": {
-          "60": "./assets/icon-60.png",   
-          "76": "./assets/icon-76.png",  
-          "152": "./assets/icon-152.png"  
+          "60": "./assets/new-60.png",   
+          "76": "./assets/new-76.png",  
+          "152": "./assets/new-152.png"  
         },
       "infoPlist": {
         "CFBundleIconName": "AppIcon",

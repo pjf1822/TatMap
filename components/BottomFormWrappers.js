@@ -35,7 +35,7 @@ const BottomFormWrappers = ({
       transform:
         selectedId === ""
           ? Platform.isPad
-            ? "translateY(60px)"
+            ? "translateY(0px)"
             : "translateY(100px)"
           : "translateY(150px)",
     },

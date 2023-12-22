@@ -1,6 +1,7 @@
-import { View, Text, Image } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import React, { useRef } from "react";
 import { PointAnnotation } from "@rnmapbox/maps";
+import { colors } from "../theme";
 
 const TemporaryPoint = ({ coordinates }) => {
   const markerRef = useRef(null);
@@ -15,11 +16,13 @@ const TemporaryPoint = ({ coordinates }) => {
           title={"hey"}
           snippet={"hey"}
         >
-          <Image
-            style={{ height: 60, aspectRatio: 1 }}
-            source={require("../assets/icon2.png")}
-            onLoad={() => markerRef?.current?.refresh()}
-          />
+          <View style={styles.logoWrapper}>
+            <Image
+              style={styles.logo}
+              source={require("../assets/icon2.png")}
+              onLoad={() => markerRef?.current?.refresh()}
+            />
+          </View>
         </PointAnnotation>
       )}
     </>
@@ -27,3 +30,26 @@ const TemporaryPoint = ({ coordinates }) => {
 };
 
 export default TemporaryPoint;
+
+const styles = StyleSheet.create({
+  logoWrapper: {
+    height: 60,
+    aspectRatio: 1,
+    borderRadius: 50,
+    // borderWidth: 3,
+    overflow: "hidden",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+    backgroundColor: colors.gray,
+    transform: [
+      { scale: 0.83 }, // Adjust the scale factor for zooming
+    ],
+  },
+  logo: {
+    height: "100%",
+    width: "100%",
+    objectFit: "contain",
+  },
+});
