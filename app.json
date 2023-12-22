@@ -15,7 +15,7 @@
     "image": "./assets/new-1024.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/icon-1024.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -25,7 +25,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.pjf1822.mapbox-native",
-      "buildNumber": "11",
+      "buildNumber": "12",
       "icon": "./assets/icon-1024.png",  
         "icons": {
           "60": "./assets/new-60.png",   
