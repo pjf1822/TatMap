@@ -17,7 +17,9 @@ import { colors } from "../theme";
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 const HomeScreen = () => {
-  const [listOfAddresses, setListOfAddresses] = useState([]);
+  const [listOfAddresses, setListOfAddresses] = useState([
+    { _id: "asdf", coordinates: [-73.935242, 40.73061] },
+  ]);
   const [selectedId, setSelectedId] = useState("");
 
   // two states for when you select an address in the google address text input
@@ -65,7 +67,7 @@ const HomeScreen = () => {
   // EFFECT TO RUN THE INITAL API CALL
   useEffect(() => {
     // clearAsyncStorage();
-    getAllAddresses();
+    // getAllAddresses();
   }, []);
 
   return (
