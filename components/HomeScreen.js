@@ -68,7 +68,7 @@ const HomeScreen = () => {
   // EFFECT TO RUN THE INITAL API CALL
   useEffect(() => {
     // clearAsyncStorage();
-    // getAllAddresses();
+    getAllAddresses();
   }, []);
 
   return (
