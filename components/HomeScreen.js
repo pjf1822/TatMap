@@ -37,6 +37,7 @@ const HomeScreen = () => {
       console.error("Error fetching data from AsyncStorage:", error);
     }
   };
+
   const clearAsyncStorage = async () => {
     try {
       await AsyncStorage.clear();
