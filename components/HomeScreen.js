@@ -8,8 +8,7 @@ import {
 } from "react-native-responsive-screen";
 import MapPoint from "./MapPoint";
 import TemporaryPoint from "./TemporaryPoint";
-import { handleLongPress, handleMapIdle } from "../helpers";
-import { fetchAddressesByDeviceIds } from "../api";
+import { getAllAddresses, handleLongPress, handleMapIdle } from "../helpers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { MAPBOX_ACCESS_TOKEN } from "@env";
@@ -18,25 +17,20 @@ Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 const HomeScreen = () => {
   const [listOfAddresses, setListOfAddresses] = useState([
-    { _id: "asdf", coordinates: [-73.935242, 40.73061] },
+    {
+      id: "asdf",
+      coordinates: [-73.935242, 40.73061],
+      description: "",
+      link: "",
+    },
   ]);
+
   const [selectedId, setSelectedId] = useState("");
 
   // two states for when you select an address in the google address text input
   const [coordinates, setCoordinates] = useState(null);
   const [zoom, setZoom] = useState(4);
   const mapRef = useRef(null);
-
-  const fetchStoredData = async () => {
-    try {
-      const storedData = await AsyncStorage.getItem("device_addresses");
-      const parsedData = JSON.parse(storedData);
-      // console.log(parsedData);
-      return parsedData || [];
-    } catch (error) {
-      console.error("Error fetching data from AsyncStorage:", error);
-    }
-  };
 
   const clearAsyncStorage = async () => {
     try {
@@ -47,28 +41,9 @@ const HomeScreen = () => {
     }
   };
 
-  const getAllAddresses = async () => {
-    try {
-      const storedIds = await fetchStoredData();
-      // const data = await fetchAddresses();
-      const data = await fetchAddressesByDeviceIds(storedIds);
-
-      // const filteredData = data?.filter((item) =>
-      //   storedIds?.includes(item._id)
-      // );
-
-      setListOfAddresses(data);
-    } catch (error) {
-      console.error(
-        "An error occurred while fetching the transactions:",
-        error
-      );
-    }
-  };
   // EFFECT TO RUN THE INITAL API CALL
   useEffect(() => {
-    // clearAsyncStorage();
-    getAllAddresses();
+    // getAllAddresses();
   }, []);
 
   return (
@@ -104,7 +79,7 @@ const HomeScreen = () => {
           {listOfAddresses?.map((address) => (
             <MapPoint
               address={address}
-              key={address?._id}
+              key={address?.id}
               setSelectedId={setSelectedId}
             />
           ))}

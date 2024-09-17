@@ -4,6 +4,17 @@ import { createAddress, deleteAddress } from "./api";
 import { Keyboard, Linking } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  collection,
+  addDoc,
+  doc,
+  setDoc,
+  where,
+  documentId,
+  query,
+  docRef,
+} from "firebase/firestore";
+import { db } from "./firebaseConfig";
 
 export const showToast = (toastMessage, success, position) => {
   let toast = Toast.show(toastMessage, {
@@ -19,45 +30,67 @@ export const showToast = (toastMessage, success, position) => {
   });
 };
 
+export const getAllAddresses = async () => {
+  try {
+    const storedData = await AsyncStorage.getItem("device_addresses");
+    const ids = JSON.parse(storedData) || [];
+
+    if (ids.length === 0) {
+      // No IDs to fetch
+      setListOfAddresses([]);
+      return;
+    }
+    const addressesQuery = query(
+      collection(db, "addresses"),
+      where(documentId(), "in", ids) // Filter documents by IDs
+    );
+
+    const querySnapshot = await getDocs(addressesQuery);
+    const addresses = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    // Update state with fetched addresses
+    setListOfAddresses(addresses);
+  } catch (error) {
+    console.error("An error occurred while fetching the transactions:", error);
+  }
+};
+
 export const handleSubmit = async (
   values,
   actions,
-  getAllAddresses,
   autocompleteRef,
   setCoordinates,
-
   setListOfAddresses
 ) => {
-  const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-  // input error handling
-  if (!values.description || !values.link || !values.newCoords.length) {
-    showToast("Please fill out all of the fields", false, Toast.positions.TOP);
-    return;
-  }
-  if (values.link && !urlRegex.test(values.link)) {
-    showToast("Link needs to be a URL", false, Toast.positions.TOP);
-    return;
-  }
-
   try {
-    const response = await createAddress({
+    // CREATE
+    const newDocRef = doc(collection(db, "addresses")); // Create a new document reference
+    const newAddress = {
       description: values?.description,
       link: values?.link,
       coordinates: {
-        theLng: String(values?.newCoords[0]),
-        theLat: String(values?.newCoords[1]),
+        lng: String(values?.newCoords[0]),
+        lat: String(values?.newCoords[1]),
       },
-    });
-    // async storage piece
+      createdAt: new Date(),
+      id: newDocRef.id, // Set the ID here
+    };
+
+    // Set the document with the new ID
+    await setDoc(newDocRef, newAddress);
+
     const deviceAddresses = await AsyncStorage.getItem("device_addresses");
     const parsedAddresses = JSON.parse(deviceAddresses) || [];
-    parsedAddresses.push(response?.address?._id);
+    parsedAddresses.push(docRef.id);
 
     await AsyncStorage.setItem(
       "device_addresses",
       JSON.stringify(parsedAddresses)
     );
-    getAllAddresses(setListOfAddresses);
+
     Keyboard.dismiss();
 
     // reset forms
@@ -70,7 +103,6 @@ export const handleSubmit = async (
       },
     });
     setCoordinates(null);
-
     showToast("Shop added!", true, Toast.positions.TOP);
   } catch (error) {
     showToast("Something went wrong!", false, Toast.positions.TOP);

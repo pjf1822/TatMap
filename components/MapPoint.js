@@ -9,11 +9,11 @@ const MapPoint = ({ address, setSelectedId }) => {
   return (
     <PointAnnotation
       ref={markerRef}
-      id={address?._id}
+      id={address?.id}
       coordinate={[address?.coordinates[0], address?.coordinates[1]]}
       title={"hey"}
       snippet={"hey"}
-      onSelected={() => setSelectedId(address._id)}
+      onSelected={() => setSelectedId(address.id)}
       onDeselected={() => setSelectedId("")}
     >
       <View style={styles.logoWrapper}>

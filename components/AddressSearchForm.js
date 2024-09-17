@@ -66,7 +66,7 @@ const AddressSearchForm = ({
         }}
         suppressDefaultStyles={true}
         query={{
-          key: GOOGLE_AUTOCORRECT_ACCESS_TOKEN,
+          key: "AIzaSyA8KdQLcsNF_eU-Z2M_l-apJT0hUSleuC0",
           language: "en",
         }}
         ref={autocompleteRef}

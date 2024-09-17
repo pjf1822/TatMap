@@ -1,4 +1,11 @@
-import { View, StyleSheet, Animated, Easing, Platform } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Animated,
+  Easing,
+  Platform,
+  Button,
+} from "react-native";
 import React, { useEffect, useRef } from "react";
 import DescriptionForm from "./DescriptionForm";
 import BottomForm from "./BottomForm";
@@ -7,6 +14,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { colors } from "../theme";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BottomFormWrappers = ({
   getAllAddresses,
@@ -20,6 +28,15 @@ const BottomFormWrappers = ({
   const slideAnim = useRef(new Animated.Value(0)).current;
   const slideAnim2 = useRef(new Animated.Value(0)).current;
 
+  const handleFetchAsyncStorage = async () => {
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      // const parsedData = JSON.parse(storedData);
+      console.log(keys);
+    } catch (error) {
+      console.error("Error fetching data from AsyncStorage:", error);
+    }
+  };
   const styles = StyleSheet.create({
     formsWrapper: {
       position: "absolute",
@@ -104,6 +121,10 @@ const BottomFormWrappers = ({
           },
         ]}
       >
+        <Button
+          title="Fetch AsyncStorage Data"
+          onPress={handleFetchAsyncStorage}
+        />
         <DescriptionForm
           getAllAddresses={getAllAddresses}
           setCoordinates={setCoordinates}

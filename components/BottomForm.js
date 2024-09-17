@@ -14,7 +14,7 @@ const BottomForm = ({
   const [currentShop, setCurrentShop] = useState({});
 
   useEffect(() => {
-    const shop = listOfAddresses.find((shop) => shop._id === selectedId);
+    const shop = listOfAddresses.find((shop) => shop.id === selectedId);
     setCurrentShop(shop || {});
   }, [selectedId, listOfAddresses]);
 

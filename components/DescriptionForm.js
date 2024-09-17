@@ -2,9 +2,10 @@ import { Formik } from "formik";
 import React, { useRef } from "react";
 import { View } from "react-native";
 import AddressSearchForm from "./AddressSearchForm";
-import { handleSubmit } from "../helpers";
+import { handleSubmit, showToast } from "../helpers";
 import MyButton from "./MyButton";
 import MyTextInput from "./MyTextInput";
+import Toast from "react-native-root-toast";
 
 const DescriptionForm = ({
   getAllAddresses,
@@ -22,18 +23,35 @@ const DescriptionForm = ({
         link: "",
         newCoords: [],
       }}
-      onSubmit={(values, actions) =>
+      onSubmit={(values, actions) => {
+        // Validation logic
+        const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+
+        if (!values.description || !values.link || !values.newCoords.length) {
+          showToast(
+            "Please fill out all of the fields",
+            false,
+            Toast.positions.TOP
+          );
+          return;
+        }
+
+        // if (values.link && !urlRegex.test(values.link)) {
+        //   showToast("Link needs to be a URL", false, Toast.positions.TOP);
+        //   return;
+        // }
+
+        // Call handleSubmit if validation passes
         handleSubmit(
           values,
           actions,
-          getAllAddresses,
           autocompleteRef,
           setCoordinates,
           setZoom,
           setListOfAddresses,
           listOfAddresses
-        )
-      }
+        );
+      }}
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
         <View>
