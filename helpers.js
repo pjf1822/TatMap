@@ -1,19 +1,9 @@
 import Toast from "react-native-root-toast";
 import { colors, regFont } from "./theme";
-import { createAddress, deleteAddress } from "./api";
-import { Keyboard, Linking } from "react-native";
+import { Linking } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  collection,
-  addDoc,
-  doc,
-  setDoc,
-  where,
-  documentId,
-  query,
-  docRef,
-} from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 
 export const showToast = (toastMessage, success, position) => {
@@ -30,80 +20,40 @@ export const showToast = (toastMessage, success, position) => {
   });
 };
 
-export const getAllAddresses = async () => {
-  try {
-    const storedData = await AsyncStorage.getItem("device_addresses");
-    const ids = JSON.parse(storedData) || [];
-
-    if (ids.length === 0) {
-      // No IDs to fetch
-      setListOfAddresses([]);
-      return;
-    }
-    const addressesQuery = query(
-      collection(db, "addresses"),
-      where(documentId(), "in", ids) // Filter documents by IDs
-    );
-
-    const querySnapshot = await getDocs(addressesQuery);
-    const addresses = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    // Update state with fetched addresses
-    setListOfAddresses(addresses);
-  } catch (error) {
-    console.error("An error occurred while fetching the transactions:", error);
-  }
-};
-
-export const handleSubmit = async (
-  values,
-  actions,
-  autocompleteRef,
-  setCoordinates,
-  setListOfAddresses
-) => {
+export const handleSubmit = async (values) => {
   try {
     // CREATE
-    const newDocRef = doc(collection(db, "addresses")); // Create a new document reference
+    const newDocRef = doc(collection(db, "addresses"));
+
     const newAddress = {
       description: values?.description,
       link: values?.link,
-      coordinates: {
-        lng: String(values?.newCoords[0]),
-        lat: String(values?.newCoords[1]),
-      },
+      coordinates: [values?.newCoords[0], values?.newCoords[1]],
       createdAt: new Date(),
-      id: newDocRef.id, // Set the ID here
+      id: newDocRef?.id,
     };
 
-    // Set the document with the new ID
     await setDoc(newDocRef, newAddress);
 
+    // ASYNC
     const deviceAddresses = await AsyncStorage.getItem("device_addresses");
-    const parsedAddresses = JSON.parse(deviceAddresses) || [];
-    parsedAddresses.push(docRef.id);
+    let parsedAddresses = [];
+
+    if (deviceAddresses) {
+      parsedAddresses = JSON.parse(deviceAddresses) || [];
+    }
+
+    parsedAddresses.push(newDocRef.id);
 
     await AsyncStorage.setItem(
       "device_addresses",
       JSON.stringify(parsedAddresses)
     );
 
-    Keyboard.dismiss();
-
+    // Keyboard.dismiss();
     // reset forms
-    autocompleteRef.current?.setAddressText("");
-    actions.resetForm({
-      values: {
-        description: "",
-        link: "",
-        newCoords: [],
-      },
-    });
-    setCoordinates(null);
-    showToast("Shop added!", true, Toast.positions.TOP);
+
+    return newAddress;
   } catch (error) {
     showToast("Something went wrong!", false, Toast.positions.TOP);
     console.error("Error creating address:", error);
@@ -123,31 +73,6 @@ export const openLink = (currentShop) => {
         );
       }
     });
-  }
-};
-
-export const deleteShop = async (
-  getAllAddresses,
-  setSelectedId,
-  selectedId,
-  setListOfAddresses
-) => {
-  const response = await deleteAddress(selectedId);
-  if (response.message === "Address deleted successfully!") {
-    const deviceAddresses = await AsyncStorage.getItem("device_addresses");
-    const parsedAddresses = JSON.parse(deviceAddresses) || [];
-
-    const updatedAddresses = parsedAddresses.filter((id) => id !== selectedId);
-
-    await AsyncStorage.setItem(
-      "device_addresses",
-      JSON.stringify(updatedAddresses)
-    );
-    showToast("Deleted Shop!", true, Toast.positions.TOP);
-    getAllAddresses(setListOfAddresses);
-    setSelectedId("");
-  } else {
-    showToast("Something went wrong", false, Toast.positions.TOP);
   }
 };
 

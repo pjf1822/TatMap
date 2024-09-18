@@ -8,43 +8,20 @@ import {
 } from "react-native-responsive-screen";
 import MapPoint from "./MapPoint";
 import TemporaryPoint from "./TemporaryPoint";
-import { getAllAddresses, handleLongPress, handleMapIdle } from "../helpers";
+import { handleLongPress, handleMapIdle } from "../helpers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { MAPBOX_ACCESS_TOKEN } from "@env";
 import { colors } from "../theme";
+import { useAddress } from "../AddressContext";
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 const HomeScreen = () => {
-  const [listOfAddresses, setListOfAddresses] = useState([
-    {
-      id: "asdf",
-      coordinates: [-73.935242, 40.73061],
-      description: "",
-      link: "",
-    },
-  ]);
-
   const [selectedId, setSelectedId] = useState("");
-
-  // two states for when you select an address in the google address text input
   const [coordinates, setCoordinates] = useState(null);
   const [zoom, setZoom] = useState(4);
   const mapRef = useRef(null);
-
-  const clearAsyncStorage = async () => {
-    try {
-      await AsyncStorage.clear();
-      console.log("AsyncStorage cleared successfully.");
-    } catch (error) {
-      console.error("Error clearing AsyncStorage:", error);
-    }
-  };
-
-  // EFFECT TO RUN THE INITAL API CALL
-  useEffect(() => {
-    // getAllAddresses();
-  }, []);
+  const { addresses } = useAddress();
 
   return (
     <View style={styles.page}>
@@ -53,12 +30,9 @@ const HomeScreen = () => {
       </View>
 
       <BottomFormWrappers
-        getAllAddresses={getAllAddresses}
         setCoordinates={setCoordinates}
         setZoom={setZoom}
         selectedId={selectedId}
-        listOfAddresses={listOfAddresses}
-        setListOfAddresses={setListOfAddresses}
         setSelectedId={setSelectedId}
       />
 
@@ -76,7 +50,7 @@ const HomeScreen = () => {
           onPress={() => setSelectedId("")}
           showsUserLocation={false}
         >
-          {listOfAddresses?.map((address) => (
+          {addresses?.map((address) => (
             <MapPoint
               address={address}
               key={address?.id}

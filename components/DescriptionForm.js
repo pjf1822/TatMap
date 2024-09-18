@@ -6,15 +6,11 @@ import { handleSubmit, showToast } from "../helpers";
 import MyButton from "./MyButton";
 import MyTextInput from "./MyTextInput";
 import Toast from "react-native-root-toast";
+import { useAddress } from "../AddressContext";
 
-const DescriptionForm = ({
-  getAllAddresses,
-  setCoordinates,
-  setZoom,
-  setListOfAddresses,
-  listOfAddresses,
-}) => {
+const DescriptionForm = ({ setCoordinates, setZoom }) => {
   const autocompleteRef = useRef(null);
+  const { addAddress } = useAddress();
 
   return (
     <Formik
@@ -23,10 +19,8 @@ const DescriptionForm = ({
         link: "",
         newCoords: [],
       }}
-      onSubmit={(values, actions) => {
+      onSubmit={async (values, actions) => {
         // Validation logic
-        const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-
         if (!values.description || !values.link || !values.newCoords.length) {
           showToast(
             "Please fill out all of the fields",
@@ -36,21 +30,22 @@ const DescriptionForm = ({
           return;
         }
 
-        // if (values.link && !urlRegex.test(values.link)) {
-        //   showToast("Link needs to be a URL", false, Toast.positions.TOP);
-        //   return;
-        // }
-
-        // Call handleSubmit if validation passes
-        handleSubmit(
-          values,
-          actions,
-          autocompleteRef,
-          setCoordinates,
-          setZoom,
-          setListOfAddresses,
-          listOfAddresses
-        );
+        try {
+          const newAddress = await handleSubmit(values);
+          addAddress(newAddress);
+          setZoom(4);
+          setCoordinates(null);
+          autocompleteRef.current?.setAddressText("");
+          actions.resetForm();
+          showToast("Shop added!", true, Toast.positions.TOP);
+        } catch (error) {
+          console.error("Error in form submission:", error);
+          showToast(
+            "Failed to submit the address!",
+            false,
+            Toast.positions.TOP
+          );
+        }
       }}
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (

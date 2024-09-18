@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import HomeScreen from "./components/HomeScreen";
 import { useFonts } from "expo-font";
+import { AddressProvider } from "./AddressContext";
 
 export default function App() {
   const [loaded, error] = useFonts({
@@ -17,9 +18,11 @@ export default function App() {
     //   behavior={Platform.OS === "ios" ? "padding" : "height"}
     //   style={styles.container}
     // >
-    <View style={styles.container}>
-      <HomeScreen />
-    </View>
+    <AddressProvider>
+      <View style={styles.container}>
+        <HomeScreen />
+      </View>
+    </AddressProvider>
   );
 }
 
