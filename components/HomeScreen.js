@@ -9,64 +9,19 @@ import {
 import MapPoint from "./MapPoint";
 import TemporaryPoint from "./TemporaryPoint";
 import { handleLongPress, handleMapIdle } from "../helpers";
-import { fetchAddressesByDeviceIds } from "../api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { MAPBOX_ACCESS_TOKEN } from "@env";
 import { colors } from "../theme";
+import { useAddress } from "../AddressContext";
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 const HomeScreen = () => {
-  const [listOfAddresses, setListOfAddresses] = useState([]);
   const [selectedId, setSelectedId] = useState("");
-
-  // two states for when you select an address in the google address text input
   const [coordinates, setCoordinates] = useState(null);
   const [zoom, setZoom] = useState(4);
   const mapRef = useRef(null);
-
-  const fetchStoredData = async () => {
-    try {
-      const storedData = await AsyncStorage.getItem("device_addresses");
-      const parsedData = JSON.parse(storedData);
-      // console.log(parsedData);
-      return parsedData || [];
-    } catch (error) {
-      console.error("Error fetching data from AsyncStorage:", error);
-    }
-  };
-  const clearAsyncStorage = async () => {
-    try {
-      await AsyncStorage.clear();
-      console.log("AsyncStorage cleared successfully.");
-    } catch (error) {
-      console.error("Error clearing AsyncStorage:", error);
-    }
-  };
-
-  const getAllAddresses = async () => {
-    try {
-      const storedIds = await fetchStoredData();
-      // const data = await fetchAddresses();
-      const data = await fetchAddressesByDeviceIds(storedIds);
-
-      // const filteredData = data?.filter((item) =>
-      //   storedIds?.includes(item._id)
-      // );
-
-      setListOfAddresses(data);
-    } catch (error) {
-      console.error(
-        "An error occurred while fetching the transactions:",
-        error
-      );
-    }
-  };
-  // EFFECT TO RUN THE INITAL API CALL
-  useEffect(() => {
-    // clearAsyncStorage();
-    getAllAddresses();
-  }, []);
+  const { addresses } = useAddress();
 
   return (
     <View style={styles.page}>
@@ -75,12 +30,9 @@ const HomeScreen = () => {
       </View>
 
       <BottomFormWrappers
-        getAllAddresses={getAllAddresses}
         setCoordinates={setCoordinates}
         setZoom={setZoom}
         selectedId={selectedId}
-        listOfAddresses={listOfAddresses}
-        setListOfAddresses={setListOfAddresses}
         setSelectedId={setSelectedId}
       />
 
@@ -98,10 +50,10 @@ const HomeScreen = () => {
           onPress={() => setSelectedId("")}
           showsUserLocation={false}
         >
-          {listOfAddresses?.map((address) => (
+          {addresses?.map((address) => (
             <MapPoint
               address={address}
-              key={address?._id}
+              key={address?.id}
               setSelectedId={setSelectedId}
             />
           ))}

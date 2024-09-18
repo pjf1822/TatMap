@@ -7,7 +7,8 @@
       [
         "@rnmapbox/maps",
         {
-          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoicGpmMTgyMiIsImEiOiJjbHE0ZnA4aDUwNnU4Mmpsb3k1NGFjNnZvIn0.UpVZBt6XqyD7uUYxOi5SeQ"
+          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoicGpmMTgyMiIsImEiOiJjbHE0ZnA4aDUwNnU4Mmpsb3k1NGFjNnZvIn0.UpVZBt6XqyD7uUYxOi5SeQ",
+          "RNMapboxMapsVersion": "11.4.0"
         }
       ]
     ],
@@ -26,23 +27,24 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.pjf1822.mapbox-native",
       "buildNumber": "14",
-      "icon": "./assets/icon-1024.png",  
-        "icons": {
-          "60": "./assets/new-60.png",   
-          "76": "./assets/new-76.png",  
-          "152": "./assets/new-152.png"  
-        },
+      "icon": "./assets/icon-1024.png",
+      "icons": {
+        "60": "./assets/new-60.png",
+        "76": "./assets/new-76.png",
+        "152": "./assets/new-152.png"
+      },
       "infoPlist": {
         "CFBundleIconName": "AppIcon",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "I am not using any user location data nor do i have access to it",
-        "NSLocationWhenInUseUsageDescription":"I am not using any user location data nor do i have access to it"
+        "NSLocationWhenInUseUsageDescription": "I am not using any user location data nor do i have access to it"
       }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.pjf1822.mapboxnativo"
     },
     "web": {
       "favicon": "./assets/favicon.png"

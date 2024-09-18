@@ -1,4 +1,11 @@
-import { View, StyleSheet, Animated, Easing, Platform } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Animated,
+  Easing,
+  Platform,
+  Button,
+} from "react-native";
 import React, { useEffect, useRef } from "react";
 import DescriptionForm from "./DescriptionForm";
 import BottomForm from "./BottomForm";
@@ -7,18 +14,42 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { colors } from "../theme";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BottomFormWrappers = ({
-  getAllAddresses,
   setCoordinates,
   setZoom,
   selectedId,
   setSelectedId,
-  setListOfAddresses,
-  listOfAddresses,
 }) => {
   const slideAnim = useRef(new Animated.Value(0)).current;
   const slideAnim2 = useRef(new Animated.Value(0)).current;
+
+  const handleFetchAsyncStorage = async () => {
+    try {
+      const storedData = await AsyncStorage.getItem("device_addresses");
+      if (storedData !== null) {
+        const parsedData = JSON.parse(storedData); // Parse if it's a JSON string
+        console.log(parsedData, "the device addresses");
+      } else {
+        console.log("No device addresses found.");
+      }
+    } catch (error) {
+      console.error("Error fetching data from AsyncStorage:", error);
+    }
+  };
+  const handleDeleteDeviceAddresses = async () => {
+    try {
+      // Remove the specific key 'device_addresses'
+      await AsyncStorage.removeItem("device_addresses");
+      console.log("device_addresses has been removed from AsyncStorage");
+    } catch (error) {
+      console.error(
+        "Error deleting device_addresses from AsyncStorage:",
+        error
+      );
+    }
+  };
 
   const styles = StyleSheet.create({
     formsWrapper: {
@@ -75,13 +106,7 @@ const BottomFormWrappers = ({
           },
         ]}
       >
-        <BottomForm
-          selectedId={selectedId}
-          getAllAddresses={getAllAddresses}
-          setSelectedId={setSelectedId}
-          setListOfAddresses={setListOfAddresses}
-          listOfAddresses={listOfAddresses}
-        />
+        <BottomForm selectedId={selectedId} setSelectedId={setSelectedId} />
       </Animated.View>
 
       <Animated.View
@@ -104,13 +129,15 @@ const BottomFormWrappers = ({
           },
         ]}
       >
-        <DescriptionForm
-          getAllAddresses={getAllAddresses}
-          setCoordinates={setCoordinates}
-          setZoom={setZoom}
-          setListOfAddresses={setListOfAddresses}
-          listOfAddresses={listOfAddresses}
-        />
+        {/* <Button
+          title="Fetch AsyncStorage Data"
+          onPress={handleFetchAsyncStorage}
+        /> */}
+        {/* <Button
+          title="delete AsyncStorage Data"
+          onPress={handleDeleteDeviceAddresses}
+        /> */}
+        <DescriptionForm setCoordinates={setCoordinates} setZoom={setZoom} />
       </Animated.View>
     </View>
   );

@@ -1,35 +1,28 @@
-import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
+import { StyleSheet, View } from "react-native";
 import HomeScreen from "./components/HomeScreen";
-import { useEffect, useState } from "react";
-import * as Font from "expo-font";
+import { useFonts } from "expo-font";
+import { AddressProvider } from "./AddressContext";
 
 export default function App() {
-  const [appIsReady, setAppIsReady] = useState(false);
+  const [loaded, error] = useFonts({
+    Quicksand: require("./assets/Quicksand.ttf"),
+    QuicksandBold: require("./assets/Quicksand-SemiBold.ttf"),
+  });
 
-  useEffect(() => {
-    async function prepare() {
-      try {
-        await Font.loadAsync({
-          Quicksand: require("./assets/Quicksand.ttf"),
-          QuicksandBold: require("./assets/Quicksand-SemiBold.ttf"),
-        });
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        setAppIsReady(true);
-      }
-    }
-
-    prepare();
-  }, []);
+  if (!loaded) {
+    return null;
+  }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <HomeScreen />
-    </KeyboardAvoidingView>
+    // <KeyboardAvoidingView
+    //   behavior={Platform.OS === "ios" ? "padding" : "height"}
+    //   style={styles.container}
+    // >
+    <AddressProvider>
+      <View style={styles.container}>
+        <HomeScreen />
+      </View>
+    </AddressProvider>
   );
 }
 
@@ -37,5 +30,6 @@ const styles = StyleSheet.create({
   container: {
     height: "100%",
     width: "100%",
+    flex: 1,
   },
 });

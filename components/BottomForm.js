@@ -1,23 +1,37 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-import { deleteShop, openLink } from "../helpers";
+import { deleteShop, openLink, showToast } from "../helpers";
 import MyButton from "./MyButton";
 import { colors, regFont } from "../theme";
+import { useAddress } from "../AddressContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-root-toast";
 
-const BottomForm = ({
-  selectedId,
-  getAllAddresses,
-  setSelectedId,
-  setListOfAddresses,
-  listOfAddresses,
-}) => {
+const BottomForm = ({ selectedId, setSelectedId }) => {
   const [currentShop, setCurrentShop] = useState({});
+  const { addresses, deleteAddress } = useAddress();
 
   useEffect(() => {
-    const shop = listOfAddresses.find((shop) => shop._id === selectedId);
+    const shop = addresses?.find((shop) => shop.id === selectedId);
+    console.log(shop);
     setCurrentShop(shop || {});
-  }, [selectedId, listOfAddresses]);
+  }, [selectedId, addresses]);
 
+  const handleDeleteShop = async () => {
+    deleteAddress(selectedId);
+    const deviceAddresses = await AsyncStorage.getItem("device_addresses");
+    const parsedAddresses = JSON.parse(deviceAddresses) || [];
+
+    const updatedAddresses = parsedAddresses.filter((id) => id !== selectedId);
+
+    await AsyncStorage.setItem(
+      "device_addresses",
+      JSON.stringify(updatedAddresses)
+    );
+
+    showToast("Deleted Shop!", true, Toast.positions.TOP);
+    setSelectedId("");
+  };
   return (
     <View>
       <Text style={styles.bottomFormText}>{currentShop.description}</Text>
@@ -26,17 +40,13 @@ const BottomForm = ({
           onPress={() => openLink(currentShop)}
           text={"Go to shops Instagram page"}
         />
-        <MyButton
-          onPress={() =>
-            deleteShop(
-              getAllAddresses,
-              setSelectedId,
-              selectedId,
-              setListOfAddresses
-            )
-          }
-          text={"Delete Shop"}
-        />
+
+        <TouchableOpacity
+          style={styles.buttonWrapper}
+          onPress={handleDeleteShop}
+        >
+          <Text style={styles.buttonText}>Delete Shop</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -59,5 +69,22 @@ const styles = StyleSheet.create({
     marginBottom: 7,
     fontFamily: regFont.fontFamilyBold,
     fontSize: 20,
+  },
+
+  buttonWrapper: {
+    padding: 10,
+    display: "flex",
+    backgroundColor: colors.licorice,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 7,
+    borderWidth: 2,
+    borderColor: colors.blue,
+  },
+  buttonText: {
+    color: colors.tan,
+    fontFamily: regFont.fontFamilyBold,
+    fontSize: 17,
   },
 });
