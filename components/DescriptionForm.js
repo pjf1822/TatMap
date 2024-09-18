@@ -14,9 +14,6 @@ const DescriptionForm = ({ setCoordinates, setZoom }) => {
   const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .?&%=]*)?$/i;
 
   const isValidURL = (urlString) => {
-    console.log(urlString);
-    console.log(urlPattern.test(urlString));
-    // Check if the URL matches the pattern
     return urlPattern.test(urlString);
   };
   return (

@@ -19,10 +19,7 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": { "env": {
-      "MAPBOX_ACCESS_TOKEN": "@MAPBOX_ACCESS_TOKEN",
-      "GOOGLE_PLACES_API_KEY": "@GOOGLE_PLACES_API_KEY"
-    }}
+    "production": { }
   },
   "submit": {
     "production": {}

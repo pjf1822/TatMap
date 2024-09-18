@@ -16,7 +16,6 @@ export const AddressProvider = ({ children }) => {
   const [addresses, setAddresses] = useState([]);
 
   const addAddress = (newAddress) => {
-    console.log("we are adding this to the global state");
     setAddresses((prevAddresses) => [...prevAddresses, newAddress]);
   };
 

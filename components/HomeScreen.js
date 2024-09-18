@@ -1,5 +1,5 @@
 import { View, Image, StyleSheet, Platform } from "react-native";
-import React, { useEffect, useState, useRef } from "react";
+import React, { , useState, useRef } from "react";
 import BottomFormWrappers from "./BottomFormWrappers";
 import Mapbox from "@rnmapbox/maps";
 import {
