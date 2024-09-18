@@ -16,12 +16,15 @@ import { useAddress } from "../AddressContext";
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 const HomeScreen = () => {
-  const [selectedId, setSelectedId] = useState("");
+  const [selectedShop, setSelectedShop] = useState(undefined);
   const [coordinates, setCoordinates] = useState(null);
   const [zoom, setZoom] = useState(4);
   const mapRef = useRef(null);
   const { addresses } = useAddress();
 
+  useEffect(() => {
+    console.log(selectedShop, "the selectedShop");
+  }, []);
   return (
     <View style={styles.page}>
       <View style={styles.logoWrapper}>
@@ -31,8 +34,8 @@ const HomeScreen = () => {
       <BottomFormWrappers
         setCoordinates={setCoordinates}
         setZoom={setZoom}
-        selectedId={selectedId}
-        setSelectedId={setSelectedId}
+        selectedShop={selectedShop}
+        setSelectedShop={setSelectedShop}
       />
 
       <View style={styles.container}>
@@ -46,14 +49,14 @@ const HomeScreen = () => {
           ref={mapRef}
           onMapIdle={() => handleMapIdle(mapRef)}
           onLongPress={handleLongPress}
-          onPress={() => setSelectedId("")}
+          onPress={() => setSelectedShop(undefined)}
           showsUserLocation={false}
         >
           {addresses?.map((address) => (
             <MapPoint
               address={address}
               key={address?.id}
-              setSelectedId={setSelectedId}
+              setSelectedShop={setSelectedShop}
             />
           ))}
           <TemporaryPoint coordinates={coordinates} />

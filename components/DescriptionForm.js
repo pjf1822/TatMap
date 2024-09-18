@@ -49,7 +49,7 @@ const DescriptionForm = ({ setCoordinates, setZoom }) => {
       }}
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
-        <View>
+        <View style={{ flex: 1 }}>
           <View>
             <AddressSearchForm
               handleChange={handleChange}

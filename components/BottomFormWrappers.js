@@ -19,8 +19,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const BottomFormWrappers = ({
   setCoordinates,
   setZoom,
-  selectedId,
-  setSelectedId,
+  selectedShop,
+  setSelectedShop,
 }) => {
   const slideAnim = useRef(new Animated.Value(0)).current;
   const slideAnim2 = useRef(new Animated.Value(0)).current;
@@ -62,35 +62,28 @@ const BottomFormWrappers = ({
       borderTopWidth: 2,
       borderTopColor: colors.licorice,
       backgroundColor: colors.tan,
-      transform:
-        selectedId === ""
-          ? Platform.OS === "ios" && Platform.isPad
-            ? "translateY(100px)"
-            : "translateY(100px)"
-          : "translateY(150px)",
     },
-    singleForm: {},
   });
   useEffect(() => {
     Animated.parallel([
       Animated.timing(slideAnim, {
-        toValue: selectedId ? 0 : 1,
-        duration: 150,
+        toValue: selectedShop ? 0 : 1,
+        duration: 100,
         easing: Easing.ease,
         useNativeDriver: false,
       }),
       Animated.timing(slideAnim2, {
-        toValue: selectedId ? 0 : 1,
-        duration: 150,
+        toValue: selectedShop ? 0 : 1,
+        duration: 100,
         easing: Easing.ease,
         useNativeDriver: false,
       }),
     ]).start();
-  }, [selectedId, slideAnim]);
+  }, [selectedShop]);
 
   return (
     <View style={styles.formsWrapper}>
-      <Animated.View
+      {/* <Animated.View
         style={[
           styles.singleForm,
 
@@ -106,39 +99,40 @@ const BottomFormWrappers = ({
           },
         ]}
       >
-        <BottomForm selectedId={selectedId} setSelectedId={setSelectedId} />
-      </Animated.View>
+        <BottomForm
+          selectedShop={selectedShop}
+          setSelectedShop={setSelectedShop}
+        />
+      </Animated.View> */}
 
       <Animated.View
         style={[
           styles.singleForm,
           {
-            transform: [
-              {
-                translateY: slideAnim2.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [
-                    hp("80%"),
-                    Platform.OS === "ios" && Platform.isPad
-                      ? -hp("10%")
-                      : -hp("14%"),
-                  ],
-                }),
-              },
-            ],
+            // transform: [
+            //   {
+            //     translateY: slideAnim2.interpolate({
+            //       inputRange: [0, 1],
+            //       outputRange: [
+            //         hp("80%"),
+            //         Platform.isPad ? -hp("10%") : -hp("14%"),
+            //       ],
+            //     }),
+            //   },
+            // ],
           },
         ]}
       >
-        {/* <Button
+        <DescriptionForm setCoordinates={setCoordinates} setZoom={setZoom} />
+      </Animated.View>
+      {/* <Button
           title="Fetch AsyncStorage Data"
           onPress={handleFetchAsyncStorage}
         /> */}
-        {/* <Button
+      {/* <Button
           title="delete AsyncStorage Data"
           onPress={handleDeleteDeviceAddresses}
         /> */}
-        <DescriptionForm setCoordinates={setCoordinates} setZoom={setZoom} />
-      </Animated.View>
     </View>
   );
 };
