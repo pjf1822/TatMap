@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { View } from "react-native";
 import AddressSearchForm from "./AddressSearchForm";
 import { handleSubmit, showToast } from "../helpers";
@@ -48,34 +48,42 @@ const DescriptionForm = ({ setCoordinates, setZoom }) => {
         }
       }}
     >
-      {({ handleChange, handleBlur, handleSubmit, values }) => (
-        <View>
-          <View>
-            <AddressSearchForm
-              handleChange={handleChange}
-              autocompleteRef={autocompleteRef}
-              setCoordinates={setCoordinates}
-              setZoom={setZoom}
-            />
-          </View>
-          <View>
-            <MyTextInput
-              onChangeText={handleChange("description")}
-              onBlur={handleBlur("description")}
-              value={values?.description}
-              placeholder="Description"
-            />
-            <MyTextInput
-              onChangeText={handleChange("link")}
-              onBlur={handleBlur("link")}
-              value={values?.link}
-              placeholder="Shop Link"
-            />
+      {({ handleChange, handleBlur, handleSubmit, values }) => {
+        // Use useEffect to monitor changes in values
+        useEffect(() => {
+          console.log("Form values changed:", values);
+          // Add any additional logic you want to perform on value change here
+        }, [values]); // Dependency array includes values to trigger effect on change
 
-            <MyButton onPress={handleSubmit} text="Submit" />
+        return (
+          <View style={{ flex: 1, marginBottom: 20 }}>
+            <View>
+              <AddressSearchForm
+                handleChange={handleChange}
+                autocompleteRef={autocompleteRef}
+                setCoordinates={setCoordinates}
+                setZoom={setZoom}
+              />
+            </View>
+            <View>
+              <MyTextInput
+                onChangeText={handleChange("description")}
+                onBlur={handleBlur("description")}
+                value={values?.description}
+                placeholder="Description"
+              />
+              <MyTextInput
+                onChangeText={handleChange("link")}
+                onBlur={handleBlur("link")}
+                value={values?.link}
+                placeholder="Shop Link"
+              />
+
+              <MyButton onPress={handleSubmit} text="Submit" />
+            </View>
           </View>
-        </View>
-      )}
+        );
+      }}
     </Formik>
   );
 };

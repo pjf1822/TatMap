@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { PointAnnotation } from "@rnmapbox/maps";
 import { colors } from "../theme";
 
-const MapPoint = ({ address, setSelectedId }) => {
+const MapPoint = ({ address, setSelectedShop }) => {
   const markerRef = useRef(null);
 
   return (
@@ -13,8 +13,7 @@ const MapPoint = ({ address, setSelectedId }) => {
       coordinate={[address?.coordinates[0], address?.coordinates[1]]}
       title={"hey"}
       snippet={"hey"}
-      onSelected={() => setSelectedId(address.id)}
-      onDeselected={() => setSelectedId("")}
+      onSelected={() => setSelectedShop(address)}
     >
       <View style={styles.logoWrapper}>
         <Image

@@ -1,28 +1,22 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
-import { deleteShop, openLink, showToast } from "../helpers";
+import { openLink, showToast } from "../helpers";
 import MyButton from "./MyButton";
 import { colors, regFont } from "../theme";
 import { useAddress } from "../AddressContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-root-toast";
 
-const BottomForm = ({ selectedId, setSelectedId }) => {
-  const [currentShop, setCurrentShop] = useState({});
-  const { addresses, deleteAddress } = useAddress();
-
-  useEffect(() => {
-    const shop = addresses?.find((shop) => shop.id === selectedId);
-    console.log(shop);
-    setCurrentShop(shop || {});
-  }, [selectedId, addresses]);
+const BottomForm = ({ selectedShop, setSelectedShop }) => {
+  const { deleteAddress } = useAddress();
 
   const handleDeleteShop = async () => {
-    deleteAddress(selectedId);
+    deleteAddress(selectedShop);
     const deviceAddresses = await AsyncStorage.getItem("device_addresses");
     const parsedAddresses = JSON.parse(deviceAddresses) || [];
 
-    const updatedAddresses = parsedAddresses.filter((id) => id !== selectedId);
+    const updatedAddresses = parsedAddresses.filter(
+      (id) => id !== selectedShop
+    );
 
     await AsyncStorage.setItem(
       "device_addresses",
@@ -30,14 +24,14 @@ const BottomForm = ({ selectedId, setSelectedId }) => {
     );
 
     showToast("Deleted Shop!", true, Toast.positions.TOP);
-    setSelectedId("");
+    setSelectedShop(undefined);
   };
   return (
-    <View>
-      <Text style={styles.bottomFormText}>{currentShop.description}</Text>
+    <View style={{ marginBottom: 20 }}>
+      <Text style={styles.bottomFormText}>{selectedShop?.description}</Text>
       <View style={styles.bottomFormButtonsWrapper}>
         <MyButton
-          onPress={() => openLink(currentShop)}
+          onPress={() => openLink(selectedShop)}
           text={"Go to shops Instagram page"}
         />
 
