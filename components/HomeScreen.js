@@ -8,7 +8,7 @@ import {
 } from "react-native-responsive-screen";
 import MapPoint from "./MapPoint";
 import TemporaryPoint from "./TemporaryPoint";
-import { handleLongPress, handleMapIdle } from "../helpers";
+import { handleMapIdle } from "../helpers";
 
 import { MAPBOX_ACCESS_TOKEN } from "@env";
 import { colors } from "../theme";
@@ -22,9 +22,6 @@ const HomeScreen = () => {
   const mapRef = useRef(null);
   const { addresses } = useAddress();
 
-  useEffect(() => {
-    console.log(selectedShop, "the selectedShop");
-  }, []);
   return (
     <View style={styles.page}>
       <View style={styles.logoWrapper}>
@@ -48,7 +45,6 @@ const HomeScreen = () => {
           scaleBarEnabled="false"
           ref={mapRef}
           onMapIdle={() => handleMapIdle(mapRef)}
-          onLongPress={handleLongPress}
           onPress={() => setSelectedShop(undefined)}
           showsUserLocation={false}
         >

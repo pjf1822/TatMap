@@ -87,13 +87,6 @@ export const handleMapIdle = async (mapRef) => {
   }
 };
 
-export const handleLongPress = async (event) => {
-  const { geometry } = event;
-  const longPressCoordinates = geometry.coordinates;
-
-  // console.log("Long Press Coordinates:", longPressCoordinates);
-};
-
 export const forwardGeocoding = async (
   address,
   setCoordinates,

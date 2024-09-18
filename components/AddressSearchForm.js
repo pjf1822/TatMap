@@ -11,10 +11,6 @@ const AddressSearchForm = ({
   setCoordinates,
   setZoom,
 }) => {
-  const isInputEmpty = () => {
-    const inputValue = autocompleteRef.current?.getAddressText() || "";
-  };
-
   return (
     <View>
       <GooglePlacesAutocomplete
@@ -71,7 +67,6 @@ const AddressSearchForm = ({
         }}
         ref={autocompleteRef}
       />
-      {isInputEmpty()}
     </View>
   );
 };

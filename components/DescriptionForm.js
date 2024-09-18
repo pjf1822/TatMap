@@ -11,7 +11,14 @@ import { useAddress } from "../AddressContext";
 const DescriptionForm = ({ setCoordinates, setZoom }) => {
   const autocompleteRef = useRef(null);
   const { addAddress } = useAddress();
+  const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .?&%=]*)?$/i;
 
+  const isValidURL = (urlString) => {
+    console.log(urlString);
+    console.log(urlPattern.test(urlString));
+    // Check if the URL matches the pattern
+    return urlPattern.test(urlString);
+  };
   return (
     <Formik
       initialValues={{
@@ -21,12 +28,26 @@ const DescriptionForm = ({ setCoordinates, setZoom }) => {
       }}
       onSubmit={async (values, actions) => {
         // Validation logic
-        if (!values.description || !values.link || !values.newCoords.length) {
+
+        if (!values.description || !values.link) {
           showToast(
             "Please fill out all of the fields",
             false,
             Toast.positions.TOP
           );
+          return;
+        }
+        if (!values.newCoords.length) {
+          showToast(
+            "Please choose an address from the dropdown",
+            false,
+            Toast.positions.TOP
+          );
+          return;
+        }
+
+        if (!isValidURL(values.link)) {
+          showToast("Please enter a valid URL", false, Toast.positions.TOP);
           return;
         }
 
@@ -35,7 +56,7 @@ const DescriptionForm = ({ setCoordinates, setZoom }) => {
           addAddress(newAddress);
           setZoom(4);
           setCoordinates(null);
-          autocompleteRef.current?.setAddressText("");
+          autocompleteRef.current?.clear();
           actions.resetForm();
           showToast("Shop added!", true, Toast.positions.TOP);
         } catch (error) {
@@ -49,12 +70,6 @@ const DescriptionForm = ({ setCoordinates, setZoom }) => {
       }}
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => {
-        // Use useEffect to monitor changes in values
-        useEffect(() => {
-          console.log("Form values changed:", values);
-          // Add any additional logic you want to perform on value change here
-        }, [values]); // Dependency array includes values to trigger effect on change
-
         return (
           <View style={{ flex: 1, marginBottom: 20 }}>
             <View>
