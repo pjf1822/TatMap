@@ -9,7 +9,6 @@ import {
 import MapPoint from "./MapPoint";
 import TemporaryPoint from "./TemporaryPoint";
 import { handleLongPress, handleMapIdle } from "../helpers";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { MAPBOX_ACCESS_TOKEN } from "@env";
 import { colors } from "../theme";
