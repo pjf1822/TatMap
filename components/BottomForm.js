@@ -27,7 +27,7 @@ const BottomForm = ({ selectedShop, setSelectedShop }) => {
     setSelectedShop(undefined);
   };
   return (
-    <View>
+    <View style={{ marginBottom: 20 }}>
       <Text style={styles.bottomFormText}>{selectedShop?.description}</Text>
       <View style={styles.bottomFormButtonsWrapper}>
         <MyButton

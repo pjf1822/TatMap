@@ -22,9 +22,6 @@ const BottomFormWrappers = ({
   selectedShop,
   setSelectedShop,
 }) => {
-  const slideAnim = useRef(new Animated.Value(0)).current;
-  const slideAnim2 = useRef(new Animated.Value(0)).current;
-
   const handleFetchAsyncStorage = async () => {
     try {
       const storedData = await AsyncStorage.getItem("device_addresses");
@@ -51,90 +48,32 @@ const BottomFormWrappers = ({
     }
   };
 
-  const styles = StyleSheet.create({
-    formsWrapper: {
-      position: "absolute",
-      padding: 10,
-      width: wp("100%"),
-      bottom: 1,
-      right: wp("0%"),
-      zIndex: 99,
-      borderTopWidth: 2,
-      borderTopColor: colors.licorice,
-      backgroundColor: colors.tan,
-    },
-  });
-  useEffect(() => {
-    Animated.parallel([
-      Animated.timing(slideAnim, {
-        toValue: selectedShop ? 0 : 1,
-        duration: 100,
-        easing: Easing.ease,
-        useNativeDriver: false,
-      }),
-      Animated.timing(slideAnim2, {
-        toValue: selectedShop ? 0 : 1,
-        duration: 100,
-        easing: Easing.ease,
-        useNativeDriver: false,
-      }),
-    ]).start();
-  }, [selectedShop]);
-
   return (
     <View style={styles.formsWrapper}>
-      {/* <Animated.View
-        style={[
-          styles.singleForm,
-
-          {
-            transform: [
-              {
-                translateY: slideAnim.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [0, hp("50%")],
-                }),
-              },
-            ],
-          },
-        ]}
-      >
+      {selectedShop ? (
         <BottomForm
           selectedShop={selectedShop}
           setSelectedShop={setSelectedShop}
         />
-      </Animated.View> */}
-
-      <Animated.View
-        style={[
-          styles.singleForm,
-          {
-            // transform: [
-            //   {
-            //     translateY: slideAnim2.interpolate({
-            //       inputRange: [0, 1],
-            //       outputRange: [
-            //         hp("80%"),
-            //         Platform.isPad ? -hp("10%") : -hp("14%"),
-            //       ],
-            //     }),
-            //   },
-            // ],
-          },
-        ]}
-      >
+      ) : (
         <DescriptionForm setCoordinates={setCoordinates} setZoom={setZoom} />
-      </Animated.View>
-      {/* <Button
-          title="Fetch AsyncStorage Data"
-          onPress={handleFetchAsyncStorage}
-        /> */}
-      {/* <Button
-          title="delete AsyncStorage Data"
-          onPress={handleDeleteDeviceAddresses}
-        /> */}
+      )}
     </View>
   );
 };
 
 export default BottomFormWrappers;
+
+const styles = StyleSheet.create({
+  formsWrapper: {
+    position: "absolute",
+    padding: 10,
+    width: wp("100%"),
+    bottom: 1,
+    right: wp("0%"),
+    zIndex: 99,
+    borderTopWidth: 2,
+    borderTopColor: colors.licorice,
+    backgroundColor: colors.tan,
+  },
+});
