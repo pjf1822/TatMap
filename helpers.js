@@ -66,11 +66,7 @@ export const openLink = (currentShop) => {
       if (supported) {
         Linking.openURL(currentShop.link);
       } else {
-        showToast(
-          "Cannot open the link. App not installed.",
-          false,
-          Toast.positions.TOP
-        );
+        showToast("Cannot open the link.", false, Toast.positions.TOP);
       }
     });
   }

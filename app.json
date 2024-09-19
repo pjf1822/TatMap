@@ -2,7 +2,7 @@
   "expo": {
     "name": "TatMap",
     "slug": "mapbox-nativo",
-    "version": "3.1.3",
+    "version": "3.1.6",
     "plugins": [
       [
         "@rnmapbox/maps",
@@ -13,7 +13,7 @@
       ]
     ],
     "orientation": "portrait",
-    "image": "./assets/new-1024.png",
+    "image": "./assets/face-icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -26,13 +26,9 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.pjf1822.mapbox-native",
-      "buildNumber": "12",
-      "icon": "./assets/icon-1024.png",
-      "icons": {
-        "60": "./assets/new-60.png",
-        "76": "./assets/new-76.png",
-        "152": "./assets/new-152.png"
-      },
+      "buildNumber": "17",
+      "icon": "./assets/face-icon.png",
+    
       "infoPlist": {
         "CFBundleIconName": "AppIcon",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "I am not using any user location data nor do i have access to it",

@@ -11,10 +11,33 @@ import { useAddress } from "../AddressContext";
 const DescriptionForm = ({ setCoordinates, setZoom }) => {
   const autocompleteRef = useRef(null);
   const { addAddress } = useAddress();
-  const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .?&%=]*)?$/i;
 
-  const isValidURL = (urlString) => {
-    return urlPattern.test(urlString);
+  const normalizeURL = (urlString) => {
+    // Remove leading/trailing whitespace
+    urlString = urlString.trim();
+
+    // Check if the URL is a basic domain or lacks a protocol
+    if (/^[a-zA-Z0-9.-]+$/.test(urlString)) {
+      // If the URL is just a domain, prepend the protocol
+      urlString = "https://" + urlString;
+    }
+
+    // Regular expression to validate URL format
+    const urlPattern = /^(https?:\/\/)?([a-z0-9.-]+)([^\s]*)$/i;
+
+    // Check if the URL matches the pattern
+    if (!urlPattern.test(urlString)) {
+      console.error("Invalid URL:", urlString);
+      return null;
+    }
+
+    // Normalize URL by ensuring lowercase domain and removing 'www.'
+    const normalizedUrl = urlString
+      .toLowerCase() // Convert the entire URL to lowercase
+      .replace(/^(https?:\/\/)?(www\.)?/i, "https://") // Ensure 'https://' and remove 'www.'
+      .replace(/\/$/, ""); // Remove trailing slash if present
+
+    return normalizedUrl;
   };
   return (
     <Formik
@@ -43,10 +66,9 @@ const DescriptionForm = ({ setCoordinates, setZoom }) => {
           return;
         }
 
-        if (!isValidURL(values.link)) {
-          showToast("Please enter a valid URL", false, Toast.positions.TOP);
-          return;
-        }
+        const normalizedLink = normalizeURL(values.link);
+
+        values.link = normalizedLink;
 
         try {
           const newAddress = await handleSubmit(values);

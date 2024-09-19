@@ -15,10 +15,7 @@ export default function App() {
 
   return (
     <AddressProvider>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
-      >
+      <KeyboardAvoidingView behavior={"padding"} style={styles.container}>
         <HomeScreen />
       </KeyboardAvoidingView>
     </AddressProvider>

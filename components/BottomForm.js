@@ -26,6 +26,7 @@ const BottomForm = ({ selectedShop, setSelectedShop }) => {
     showToast("Deleted Shop!", true, Toast.positions.TOP);
     setSelectedShop(undefined);
   };
+
   return (
     <View style={{ marginBottom: 20 }}>
       <Text style={styles.bottomFormText}>{selectedShop?.description}</Text>

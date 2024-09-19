@@ -1,10 +1,7 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Button } from "react-native";
 import DescriptionForm from "./DescriptionForm";
 import BottomForm from "./BottomForm";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { colors } from "../theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -50,6 +47,7 @@ const BottomFormWrappers = ({
       ) : (
         <DescriptionForm setCoordinates={setCoordinates} setZoom={setZoom} />
       )}
+      {/* <Button title="delete" onPress={handleDeleteDeviceAddresses} /> */}
     </View>
   );
 };

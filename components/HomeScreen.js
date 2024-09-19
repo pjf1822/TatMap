@@ -72,11 +72,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     position: "relative",
+    height: "100%",
   },
 
   container: {
     height: "100%",
     width: "100%",
+    flex: 1,
   },
   map: {
     flex: 1,
