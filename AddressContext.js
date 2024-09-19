@@ -7,6 +7,8 @@ import {
   documentId,
   query,
   getDocs,
+  deleteDoc,
+  doc,
 } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -47,9 +49,11 @@ export const AddressProvider = ({ children }) => {
     fetchAddresses();
   }, []);
 
-  const deleteAddress = async (addressId) => {
+  const deleteAddress = async (addressToDelete) => {
+    await deleteDoc(doc(db, "addresses", addressToDelete.id));
+
     setAddresses((prevAddresses) =>
-      prevAddresses.filter((address) => address.id !== addressId)
+      prevAddresses.filter((address) => address.id !== addressToDelete.id)
     );
   };
 
