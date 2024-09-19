@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
 import HomeScreen from "./components/HomeScreen";
 import { useFonts } from "expo-font";
 import { AddressProvider } from "./AddressContext";
@@ -14,14 +14,13 @@ export default function App() {
   }
 
   return (
-    // <KeyboardAvoidingView
-    //   behavior={Platform.OS === "ios" ? "padding" : "height"}
-    //   style={styles.container}
-    // >
     <AddressProvider>
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
         <HomeScreen />
-      </View>
+      </KeyboardAvoidingView>
     </AddressProvider>
   );
 }

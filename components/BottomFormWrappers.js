@@ -1,12 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Animated,
-  Easing,
-  Platform,
-  Button,
-} from "react-native";
-import React, { useEffect, useRef } from "react";
+import { View, StyleSheet } from "react-native";
 import DescriptionForm from "./DescriptionForm";
 import BottomForm from "./BottomForm";
 import {

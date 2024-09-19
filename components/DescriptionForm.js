@@ -1,6 +1,6 @@
 import { Formik } from "formik";
 import React, { useEffect, useRef } from "react";
-import { View } from "react-native";
+import { Keyboard, View } from "react-native";
 import AddressSearchForm from "./AddressSearchForm";
 import { handleSubmit, showToast } from "../helpers";
 import MyButton from "./MyButton";
@@ -54,7 +54,9 @@ const DescriptionForm = ({ setCoordinates, setZoom }) => {
           setZoom(4);
           setCoordinates(null);
           autocompleteRef.current?.clear();
+          autocompleteRef.current.setAddressText("");
           actions.resetForm();
+          Keyboard.dismiss();
           showToast("Shop added!", true, Toast.positions.TOP);
         } catch (error) {
           console.error("Error in form submission:", error);
